@@ -1,0 +1,16 @@
+﻿.active {
+    color:skyblue!important;
+}
+
+.tabbedPane {
+    padding:7px;
+    text-decoration: none;
+    color: black;
+  
+}
+
+.tabbedPane:hover {
+        color:skyblue; 
+    }
+
+

@@ -1,0 +1,121 @@
+﻿
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="../css/home.css" rel="stylesheet" />
+    <link href="../css/Questions.css" rel="stylesheet" />
+    <title>StackOverFlow</title>
+
+</head>
+<body>
+    <div class="container-fluid" style="height: 30px; background-color: #333231;">
+        <div class="container">
+            <div class="row" style="margin-left: 5px;">
+                <div class="col-6 text-white horizntal smStyle"><img class="mx-1" src="../assest/facebook.png" style="width: 21px; height: 21px;"><img class="mx-1" src="../assest/instagram.png" style="width: 21px; height: 21px;"><img src="../assest/twitter.png" class="mx-1" style="width: 21px; height: 21px;"></div>
+                <div class="col-3 text-white horizntal smHide"><span class="mx-1">Sadek.kabalan01@gmail.com</span><img src="../assest/user.png" style="width: 21px; height: 21px;"></div>
+                <div class="col-3 text-white horizntal smHide"><span class="mx-1">Log Out</span><img src="../assest/exit.png" style="width: 21px; height: 21px;"></div>
+                <div class="col-6 horizntal"><div class="smShow"><img class="mx-2" src="../assest/exit.png" style="width: 21px; height: 21px;"><img src="../assest/user.png" style="width: 21px; height: 21px;"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class=" order-md-1 col-md-2"><img src="../assest/question.jpg" class="imgLogo"></div>
+            <div class="order-3  hell col-3"><button style="margin-top: 8px; height: 41px; background-color: #3D7CB3; color: white; border-radius: 10px; border: none; width: auto; font-size: 12px;">Ask A Question</button></div>
+            <div class="col-md-4   order-md-2 order-2 col-7"><input class="form-control hi " style="margin-top: 15px;" type="search" placeholder="Search" aria-label="Search"></div>
+            <div class="col-md-6  order-1 order-md-3 col-2">
+                <nav class="navbar-light navbar-expand-sm  ">
+                    <div style="height: 50px; margin-top: 10px;">
+                        <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="navbarResponsive" aria-expanded="false">
+                            <span class="navbar-toggler-icon "></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="mainNav">
+                            <div class="navbar-nav">
+                                @Html.ActionLink("Home", "Index", null, new { @class = "nav-item nav-link mx-2 navdecoration" })
+                                @Html.ActionLink("Qustions", "Questions", null, new { @class = "nav-item nav-link mx-2 navdecoration" })
+                                @Html.ActionLink("Student's Journey", "Journey", null, new { @class = "nav-item nav-link mx-2 navdecoration" })
+                                @Html.ActionLink("About Us", "About", null, new { @class = "nav-item nav-link mx-2 navdecoration" })
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+    <div>@RenderBody()</div>
+
+
+
+
+
+
+    <div class="container-fluid" style="background-color: #333231;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 text-white col-sm-12">
+                    <div class="card" style="background-color: transparent; border: none;">
+                        <div class="card-body">
+                            <label style="font-size: 20px; border-bottom: 1px dashed white;">About Us</label>
+                            <p style="padding-top: 5px;"> We are 2 LU Computer Sceince Students in Lebanon, we created this website to help the students and share thier knowlodges. </p>
+                            <button type="button" class="btn btn-light" style="margin-bottom: 30px;">Show More <i><img src="../assest/right.png" style="height: 17px; width: 17px;"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3 text-white col-sm-12 ">
+                    <div class="card" style="background-color: transparent; border: none;">
+                        <div class="card-body">
+                            <label style="font-size: 20px; border-bottom: 1px dashed white;">Quick Links</label>
+                            <ul style=" list-style: none; padding:5px 0px 0px 0px;">
+                                <li><a href="#" style="text-decoration: none; color: white;">Ask A Qustion</a></li>
+                                <li><a href="#" style="text-decoration: none; color: white;">Questions</a></li>
+                                <li><a href="#" style="text-decoration: none; color: white;">Students Journey</a></li>
+                                <li><a href="#" style="text-decoration: none; color: white;">About Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 text-white col-sm-12 text-md-center text-sm-left">
+                    <div class="card" style="background-color: transparent; border: none;">
+                        <div class="card-body ">
+                            <label style="font-size: 20px; border-bottom: 1px dashed white;">Follow Up!</label>
+                            <br>
+                            <div class="btn-group" role="group" style="padding-top: 5px; ">
+                                <button type="button" class="btn"><i><img src="../assest/facebook.png"></i></button>
+                                <button type="button" class="btn"><i><img src="../assest/instagram.png"></i></button>
+                                <button type="button" class="btn"><i><img src="../assest/twitter.png"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 text-white col-sm-12">
+                    <div class="card" style="background-color: transparent; border: none;">
+                        <div class="card-body">
+                            <label style="font-size: 20px; border-bottom: 1px dashed white;">Contact Us!</label>
+                            <br>
+                            <label style="font-size: 15px; padding-top: 5px;">Send us any beficial feedback to improve our site !</label>
+                            <br>
+                            <button type="button" class="btn btn-light" style="margin-top: 5px; width: 75%;">Send Email</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="text-md-center text-white text-sm-left mx-3" style="margin-bottom: 20px;">
+                        <label>site design / logo © 2021 Sadek Kabalan / Mahdi Trabolsi</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</body>
+</html>

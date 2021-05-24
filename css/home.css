@@ -1,0 +1,126 @@
+﻿.horizntal {
+    display: inline-block;
+}
+
+.navdecoration {
+    color: black!important;
+    font-size: 16px!important;
+}
+
+
+#bannerText {
+    color: white;
+}
+
+@media (max-width: 540px) {
+    .g {
+        color: black;
+    }
+
+    .bgImage {
+        background-color: #3D7CB3;
+        width: 100%;
+        height: 90%;
+    }
+
+    .smShow {
+        float: right;
+        margin-right: -25px;
+    }
+
+    .smStyle {
+        margin-left: -25px;
+    }
+
+    .smHide {
+        display: none;
+    }
+
+    .hi {
+        width: 100%;
+        margin-left: 5px;
+        margin-top: 10px !important;
+    }
+
+    .navbar-nav {
+        position: absolute;
+        background-color: white;
+    }
+
+    .imgLogo {
+        display: none;
+    }
+
+    .cardSM {
+        margin: 0 auto; /* Added */
+        float: none;
+        margin-bottom: 10px;
+        margin-top: 20px;
+    }
+
+    .cardSM2 {
+        margin: 0 auto; /* Added */
+        float: none;
+        margin-top: 40px;
+    }
+
+    .textBanners {
+        margin-top: 30px;
+        font-size: 30px;
+        margin-left: 10px;
+    }
+
+    .textBanners2 {
+        margin-top: 5px;
+        font-size: 30px;
+        margin-bottom: 10px;
+        margin-left: 10px;
+    }
+}
+
+@media ( min-width: 541px) {
+    .bgImage {
+        background-image: url('../assest/bg.jpg');
+        background-size: cover;
+        width: 100%;
+        height: 90%;
+    }
+
+    .smShow {
+        display: none;
+    }
+
+    .hell {
+        display: none;
+    }
+
+    .cardSM {
+        margin-left: 130px;
+        margin-bottom: 60px;
+        margin-top: 60px;
+    }
+
+    .imgLogo {
+        width: 150px;
+        height: 60px;
+    }
+
+    .cardSM2 {
+        margin-left: 50px;
+        margin-top: 60px;
+    }
+
+    .textBanners {
+        margin-top: 20rem;
+        font-size: 35px;
+    }
+
+    .textBanners2 {
+        margin-top: 10px;
+        font-size: 35px;
+    }
+
+    .g {
+        color: #3D7CB3;
+    }
+}
