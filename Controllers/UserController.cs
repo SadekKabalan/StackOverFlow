@@ -7,32 +7,19 @@ using StackOverFlow.Models;
 
 namespace StackOverFlow.Controllers
 {
-    public class HomeController : Controller
+    public class UserController : Controller
     {
         private StackDBContext db = new StackDBContext();
-
-        public ActionResult Index()
-        {   
+       
+        // GET: User
+        public ActionResult Login()
+        {
+            
             return View();
         }
-
-        public ActionResult Questions()
+        public ActionResult Register()
         {
             return View();
         }
-
-        public ActionResult Journey()
-        {
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            return View();
-        }
-
-
-
-
     }
 }
