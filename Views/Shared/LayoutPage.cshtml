@@ -21,10 +21,13 @@
             </div>
         </div>
     </div>
-
+    @using (@Html.BeginForm("Index", "Question","Button"))
+    { 
     <div class="container">
         <div class="row">
-            <div class=" order-md-1 col-md-2"><img src="../assest/question.jpg" class="imgLogo"></div>
+           
+            <div class=" order-md-1 col-md-2"> <button type="submit" style="border:none;"><img src="../assest/question.jpg" class="imgLogo"></button>
+            </div>
             <div class="order-3  hell col-3"><button style="margin-top: 8px; height: 41px; background-color: #3D7CB3; color: white; border-radius: 10px; border: none; width: auto; font-size: 12px;">Ask A Question</button></div>
             <div class="col-md-4   order-md-2 order-2 col-7"><input class="form-control hi " style="margin-top: 15px;" type="search" placeholder="Search" aria-label="Search"></div>
             <div class="col-md-6  order-1 order-md-3 col-2">
@@ -35,10 +38,10 @@
                         </button>
                         <div class="collapse navbar-collapse" id="mainNav">
                             <div class="navbar-nav">
-                                @Html.ActionLink("Home", "Index", null, new { @class = "nav-item nav-link mx-2 navdecoration" })
-                                @Html.ActionLink("Qustions", "Questions", null, new { @class = "nav-item nav-link mx-2 navdecoration" })
-                                @Html.ActionLink("Student's Journey", "Journey", null, new { @class = "nav-item nav-link mx-2 navdecoration" })
-                                @Html.ActionLink("About Us", "About", null, new { @class = "nav-item nav-link mx-2 navdecoration" })
+                                @Html.ActionLink("Home", "Index","Home", null, new { @class = "nav-item nav-link mx-2 navdecoration" })
+                                @Html.ActionLink("Qustions", "Questions","Home", new {  nbPages = 1 }, new { @class = "nav-item nav-link mx-2 navdecoration" })
+                                @Html.ActionLink("Student's Journey", "Journey","Home", null, new { @class = "nav-item nav-link mx-2 navdecoration" })
+                                @Html.ActionLink("About Us", "About","Home", null, new { @class = "nav-item nav-link mx-2 navdecoration" })
                             </div>
                         </div>
                     </div>
@@ -46,7 +49,7 @@
             </div>
         </div>
     </div>
-
+    }
 
     <div>@RenderBody()</div>
 

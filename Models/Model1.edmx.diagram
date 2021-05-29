@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4caab649582e4573866f8b1798b6b715" Name="Diagram1">
+        <EntityTypeShape EntityType="StackOverFlowModel.Answer" Width="1.5" PointX="7.5" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverFlowModel.Branch" Width="1.5" PointX="3.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverFlowModel.Comment" Width="1.5" PointX="9.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverFlowModel.Factulty" Width="1.5" PointX="3.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverFlowModel.Profile" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverFlowModel.Question" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverFlowModel.tag_question" Width="1.5" PointX="10.5" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverFlowModel.Tag" Width="1.5" PointX="8.25" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverFlowModel.uni_fact_branch" Width="1.5" PointX="6" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="StackOverFlowModel.University" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
+        <AssociationConnector Association="StackOverFlowModel.FK__Answer__question__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverFlowModel.FK__Comment__answer___38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverFlowModel.FK__uni_fact___branc__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverFlowModel.FK__Comment__creator__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverFlowModel.FK__Comment__questio__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverFlowModel.FK__uni_fact___factu__2B3F6F97" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverFlowModel.FK__Profile__univers__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverFlowModel.FK__Question__creato__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverFlowModel.FK__tag_quest__quest__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverFlowModel.FK__tag_quest__tag_I__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="StackOverFlowModel.FK__uni_fact___unive__29572725" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

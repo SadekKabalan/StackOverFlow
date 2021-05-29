@@ -1,6 +1,7 @@
 ﻿.active {
-    color:skyblue!important;
+    border-bottom: 2px solid green;
 }
+
 
 .tabbedPane {
     padding:7px;
@@ -9,8 +10,14 @@
   
 }
 
-.tabbedPane:hover {
-        color:skyblue; 
+    .tabbedPane:hover {
+        color:black;
+        border-bottom: 2px solid green;
     }
 
-
+.contStyle {
+    height: 32px;
+    margin-top: 20px;
+    margin-bottom:20px;
+  
+}

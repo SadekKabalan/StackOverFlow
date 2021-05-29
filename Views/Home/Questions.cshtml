@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable< StackOverFlow.Models.QuestionTagView>
 @{
     ViewBag.Title = "Questions";
     Layout = "~/Views/Shared/LayoutPage.cshtml";
@@ -6,26 +6,102 @@
 
 
 <body>
-    <div class="container-fluid" style="        height: 50px;
-        margin-top: 20px;
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
-        background-color: #EBEBEB;
-        margin-bottom: 10px;">
+    <div class="container-fluid contStyle">
         <div class="container">
             <div class="row">
-                <div class="col-10 ">
-                    <ul class="nav nav-tabs justify-content-center " style="border-bottom:1px solid black;;">
+                <div class="col-9 ">
+                    <ul class="nav nav-tabs" style="border:none;">
                         <li> @Html.ActionLink("All Questions", "Questions", null, new { @class = "tabbedPane active" })</li>
                         <li> @Html.ActionLink("My Questions", "Questions", null, new { @class = "tabbedPane" })</li>
                     </ul>
                 </div>
-                <div class="col-2">
-                    @Html.ActionLink("filter", "Questions")
+                <div class="col-3">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-bs-toggle="dropdown">
+                            <i><img src="~/assest/filter-filled-tool-symbol.png" style="height:20px; width:20px;" /></i>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1" style="width:250px; background-color:lightblue; border:dotted 3px white;">
+                            <li role="presentation" class="my-1 mx-1">
+                                <label>University:</label> <select class="custom-select custom-select-sm" id="gender2">
+                                    <option selected>Choose...</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                </select>
+                            </li>
+                            <li role="presentation" class="my-1 mx-1">
+                                <label>Subject:</label> <select class="custom-select custom-select-sm" id="gender2">
+                                    <option selected>Choose...</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                </select>
+                            </li>
+                            <li role="presentation" class="my-1 mx-1"><label>By Tag:</label><input type="text" value="e.g:java/molecule" style="width:150px; height:25px;" /></li>
+                            <li role="presentation" class="my-1 mx-1"><label>Asker name:</label><input type="text" style="width:130px; height:25px;" /></li>
+                            <li role="presentation" class="my-1 mx-1"><label>Have an answer?</label><input type="checkbox" value="correct" /></li>
+                            <li><button class="btn btn-primary " style="margin-left:35%;">Submit</button></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    @{
+<div class="container">
+           @foreach (var quest in Model)
+           {
+            <div class="row" style="border:solid 2px black; margin-top:10px; margin-bottom:10px; background-color:lightgreen;">
+                <div class="col-1 text-center">
+                    <div style="margin-top:50%;"><label class="mx-2">@quest.nbAnswers</label><i><img src="~/assest/speech-bubble.png" style="width:25px; height:25px;" /></i></div>
+                </div>
+                <div class="col-11">
+                    <p style="font-size:22px; color:royalblue; ">@quest.title</p>
+                    <p>tags:
+                    @foreach (var tag in quest.tag)
+                    {
+                    <label class="mx-3 px-2" style="background-color:lightgray;">@tag</label>
+                    }
+                    <p><label class="mx-2">@quest.date</label><label style="color:royalblue;">by  @quest.creatorName </label> </p>
+                </div>
+            </div>
+           }
+
+        </div>
+    }
+    @{ 
+    <div class="container">
+        <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if (Model.FirstOrDefault() != null)
+                    {
+                        if (Model.First().nbPages == 1)
+                        {
+                            <li class="page-item">@Html.ActionLink("1", "Questions", "Home", new { nbPages = 1 }, new { @class = "page-link" })</li>
+                        }
+                        else if (Model.First().nbPages > 1 && Model.First().pageIndxer == 1)
+                        {
+                            <li class="page-item">@Html.ActionLink("" + Model.First().pageIndxer, "Questions", "Home", new { nbPages = Model.First().pageIndxer }, new { @class = "page-link" })</li>
+                            <li class="page-item">@Html.ActionLink("Next", "Questions", "Home", new { nbPages = Model.First().pageIndxer + 1 }, new { @class = "page-link" })</li>
+                        }
+
+                       else  if (Model.First().nbPages == Model.First().pageIndxer)
+                        {
+                            <li class="page-item">@Html.ActionLink("Pervious", "Questions", "Home", new { nbPages = Model.First().pageIndxer - 1 }, new { @class = "page-link" })</li>
+                            <li class="page-item">@Html.ActionLink("" + Model.First().pageIndxer, "Questions", "Home", new { nbPages = Model.First().pageIndxer }, new { @class = "page-link" })</li>
+                        }
+                        else if(Model.First().nbPages >=2 && Model.First().pageIndxer >1 )
+                        {
+                            <li class="page-item">@Html.ActionLink("Pervious", "Questions", "Home", new { nbPages = Model.First().pageIndxer - 1 }, new { @class = "page-link" })</li>
+                            <li class="page-item">@Html.ActionLink("" + Model.First().pageIndxer, "Questions", "Home", new { nbPages = Model.First().pageIndxer }, new { @class = "page-link" })</li>
+                            <li class="page-item">@Html.ActionLink("Next", "Questions", "Home", new { nbPages = Model.First().pageIndxer + 1 }, new { @class = "page-link" })</li>
 
 
+                        }
+                    }
+
+
+
+                </ul>
+        </nav>
+    </div>
+        }
 </body>

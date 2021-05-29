@@ -1,0 +1,105 @@
+﻿@model StackOverFlow.Models.QuestionTagView
+@{
+    ViewBag.Title = "questionForm";
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
+}
+
+<body>
+   
+     <div class="container" style="margin-top:20px; margin-bottom:20px; ">
+         <div class="row">
+           
+             <div class="col-md-8 col-sm-12 " style="border:2px solid black;">
+                 @using (@Html.BeginForm("Submit", "Question", "Button"))
+                 {
+                     <h2>Ask A Public Question</h2>
+
+                     <form>
+                         <div class="mb-3">
+                             <label class="form-label">Title:</label>
+                             <div class="form-text">Be specific and imagine you’re asking a question to another person. </div>
+                             @Html.TextBoxFor(model => model.title, new { @class = "form-control" })
+                         </div>
+                         <div class="mb-3">
+                             <label class="form-label">Question Body:</label>
+                             <div class="form-text">Write a well organized description about your problem.</div>
+                             @Html.TextAreaFor(model => model.body, new { @class = "form-control", @style = "height: 100px;" })
+                         </div>
+                         <div class="mb-3">
+                             <label for="formFile" class="form-label">Image Field:</label>
+                             @Html.TextBoxFor(model => model.imagePath, new { @class = "form-control", @type = "file", @id = "formFile" })
+                         </div>
+                         <div class="mb-3">
+                             <label class="form-label">Tags:</label>
+                             <div class="form-text">Add up to 5 tags to describe what your question is about</div>
+                             @Html.TextBoxFor(model => model.tag, new { @class = "form-control", @placeholder = "e.g (java matrix organic heart) ..." })
+                         </div>
+
+                         <div class="mb-3">
+                             <button type="submit" class="btn btn-primary">Submit your question</button>
+                         </div>
+
+                     </form>
+                 }
+                 </div>
+             
+
+             <div class="col-md-4 col-sm-12 ">
+                 <div class="flex-shrink-0 p-3 bg-white">
+
+                     <span class="fs-5 fw-semibold">Question Creation Guide</span>
+
+                     <ul class="list-unstyled ps-0">
+                         <li class=" border-top my-3"></li>
+                         <li>
+                             The community is here to help you with specific coding, Mathmatics, or any educational problem.
+
+                             Avoid asking opinion-based questions.
+                         </li>
+                         <li class="border-top my-3"></li>
+                         <li class="mb-1">
+                             <button class="btn btn-toggle align-items-center rounded collapsed dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+                                 Summarize the Problem:
+                             </button>
+                             <div class="collapse show" id="home-collapse">
+                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" style="margin-left:20px; font-size:14px;">
+                                     <li>1. Include details about your goal</li>
+                                     <li>2. Describe expected and actual results</li>
+                                 </ul>
+                             </div>
+                         </li>
+                         <li class="border-top my-3"></li>
+                         <li class="mb-1">
+                             <button class="btn btn-toggle align-items-center rounded collapsed dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                                 Describe what you have tried
+                             </button>
+                             <div class="collapse" id="dashboard-collapse" style="margin-left:20px; font-size:14px;">
+                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                     <li>Show what you’ve tried and tell us what you found (on this site or elsewhere) and why it didn’t meet your needs. You can get better answers when you provide research.</li>
+                                 </ul>
+                             </div>
+                         </li>
+                         <li class="border-top my-3"></li>
+                         <li class="mb-1">
+                             <button class="btn btn-toggle align-items-center rounded collapsed dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+                                 Show some solution
+                             </button>
+                             <div class="collapse" id="orders-collapse">
+                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" style="margin-left:20px; font-size:14px;">
+                                     <li>When appropriate, share a small part of your solution(if possible) of the problem to reproduce it </li>
+                                 </ul>
+                             </div>
+                         </li>
+                         <li class="border-top my-3"></li>
+
+                     </ul>
+                 </div>
+             </div>
+
+         </div>
+    </div>
+    
+</body>
+
+
+

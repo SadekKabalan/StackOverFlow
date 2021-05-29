@@ -9,18 +9,36 @@ namespace StackOverFlow.Controllers
 {
     public class HomeController : Controller
     {
-        private StackDBContext db = new StackDBContext();
-
         public ActionResult Index()
         {   
             return View();
         }
 
-        public ActionResult Questions()
+        public ActionResult Questions(int nbPages = 1)
         {
-            var questions = from e in db.Questions
-                            select e;
-            return View();
+            FlowEntities db = new FlowEntities();
+            var questions = from question in db.Questions select question;
+            var questionList = questions.OrderBy(x => x.date).Skip((nbPages - 1) * 6).Take(6);
+            List<QuestionTagView> result=new List<QuestionTagView>();
+            foreach(var quest in questionList)
+            {
+                QuestionTagView tagView = new QuestionTagView();
+                tagView.title = quest.title;
+                tagView.body = quest.body;
+                tagView.date = quest.date;
+                var res= (from tagId in db.tag_question.Where(x => x.question_ID == quest.question_ID) join tag in db.Tags on tagId.tag_ID equals tag.tag_ID select tag.tagText ).ToList();
+                tagView.tag= res;
+                List<int> nbAnswers =(from answer in db.Answers.Where(x => x.question_ID == quest.question_ID) select answer.answer_ID).ToList();
+                tagView.nbAnswers = nbAnswers.Count();
+                var name = (from names in db.Profiles.Where(x => x.creator_ID == quest.creator_ID) select names.username);
+                tagView.creatorName = name.FirstOrDefault();
+                tagView.nbPages = (int) Math.Ceiling((double) questions.Count() / 6 );
+                tagView.pageIndxer = nbPages;
+                result.Add(tagView);
+            }
+          
+            
+            return View(result);
         }
 
         public ActionResult Journey()
@@ -32,7 +50,11 @@ namespace StackOverFlow.Controllers
         {
             return View();
         }
-
+        
+        public ActionResult questionForm()
+        {
+            return View();
+        }
 
 
 
