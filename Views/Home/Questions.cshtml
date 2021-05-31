@@ -54,13 +54,13 @@
                     <div style="margin-top:50%;"><label class="mx-2">@quest.nbAnswers</label><i><img src="~/assest/speech-bubble.png" style="width:25px; height:25px;" /></i></div>
                 </div>
                 <div class="col-11">
-                    <p style="font-size:22px; color:royalblue; ">@quest.title</p>
+                    <p style="font-size:22px; color:royalblue; ">@Html.ActionLink(quest.title,"questionDetails","Question", new { id = quest.question_ID },new { @style="text-decoration:none;"})</p>
                     <p>tags:
                     @foreach (var tag in quest.tag)
                     {
                     <label class="mx-3 px-2" style="background-color:lightgray;">@tag</label>
                     }
-                    <p><label class="mx-2">@quest.date</label><label style="color:royalblue;">by  @quest.creatorName </label> </p>
+                    <p><label class="mx-2">@quest.date</label><label style="color:royalblue;">by  @quest.creator.username </label> </p>
                 </div>
             </div>
            }

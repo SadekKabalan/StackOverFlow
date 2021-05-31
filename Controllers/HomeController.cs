@@ -18,11 +18,12 @@ namespace StackOverFlow.Controllers
         {
             FlowEntities db = new FlowEntities();
             var questions = from question in db.Questions select question;
-            var questionList = questions.OrderBy(x => x.date).Skip((nbPages - 1) * 6).Take(6);
+            var questionList = questions.OrderByDescending(x => x.date ).Skip((nbPages - 1) * 6).Take(6);
             List<QuestionTagView> result=new List<QuestionTagView>();
             foreach(var quest in questionList)
             {
                 QuestionTagView tagView = new QuestionTagView();
+                tagView.question_ID = quest.question_ID;
                 tagView.title = quest.title;
                 tagView.body = quest.body;
                 tagView.date = quest.date;
@@ -30,8 +31,8 @@ namespace StackOverFlow.Controllers
                 tagView.tag= res;
                 List<int> nbAnswers =(from answer in db.Answers.Where(x => x.question_ID == quest.question_ID) select answer.answer_ID).ToList();
                 tagView.nbAnswers = nbAnswers.Count();
-                var name = (from names in db.Profiles.Where(x => x.creator_ID == quest.creator_ID) select names.username);
-                tagView.creatorName = name.FirstOrDefault();
+                var name = db.Profiles.Single(x => x.creator_ID == quest.creator_ID);
+                tagView.creator.username = name.username;
                 tagView.nbPages = (int) Math.Ceiling((double) questions.Count() / 6 );
                 tagView.pageIndxer = nbPages;
                 result.Add(tagView);

@@ -237,6 +237,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Shared\LayoutPage.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
+    <Content Include="Views\Question\questionDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

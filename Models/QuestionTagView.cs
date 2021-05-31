@@ -12,12 +12,17 @@ namespace StackOverFlow.Models
 
         }
 
+        public int question_ID { get; set; }
         public string title { get; set; }
         public string body { get; set; }
 
         public string imagePath { get; set; }
         
         public List<string> tag { get; set; }
+
+        public List<Comment> questionComments { get; set; }
+        public List<Answer> answers { get; set; }
+        public List<List<Comment>> answersComments { get; set; }
 
         public string date { get; set; }
 
@@ -28,6 +33,6 @@ namespace StackOverFlow.Models
 
         public int pageIndxer { get;set; }
 
-        public string creatorName { get; set; } 
+        public Profile creator { get; set; } = new Profile();
     }
 }
