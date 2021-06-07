@@ -19,6 +19,9 @@ namespace StackOverFlow.Models
         {
             this.Comments = new HashSet<Comment>();
             this.Questions = new HashSet<Question>();
+            this.Answers = new HashSet<Answer>();
+            this.savedQuestions = new HashSet<savedQuestion>();
+            this.Journeys = new HashSet<Journey>();
         }
     
         public int creator_ID { get; set; }
@@ -27,11 +30,20 @@ namespace StackOverFlow.Models
         public string username { get; set; }
         public string major { get; set; }
         public Nullable<int> university_ID { get; set; }
+        public bool remember { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual University University { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Question> Questions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Answer> Answers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<savedQuestion> savedQuestions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Journey> Journeys { get; set; }
+
+        public List<string> Universities { get; set; }
     }
 }

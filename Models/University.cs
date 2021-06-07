@@ -18,7 +18,6 @@ namespace StackOverFlow.Models
         public University()
         {
             this.Profiles = new HashSet<Profile>();
-            this.uni_fact_branch = new HashSet<uni_fact_branch>();
         }
     
         public int university_ID { get; set; }
@@ -26,7 +25,5 @@ namespace StackOverFlow.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profiles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<uni_fact_branch> uni_fact_branch { get; set; }
     }
 }

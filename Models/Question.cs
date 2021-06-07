@@ -20,6 +20,7 @@ namespace StackOverFlow.Models
             this.Answers = new HashSet<Answer>();
             this.Comments = new HashSet<Comment>();
             this.tag_question = new HashSet<tag_question>();
+            this.savedQuestions = new HashSet<savedQuestion>();
         }
     
         public int question_ID { get; set; }
@@ -36,5 +37,7 @@ namespace StackOverFlow.Models
         public virtual Profile Profile { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tag_question> tag_question { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<savedQuestion> savedQuestions { get; set; }
     }
 }

@@ -27,9 +27,11 @@ namespace StackOverFlow.Models
         public string date { get; set; }
         public string imagePath { get; set; }
         public Nullable<int> question_ID { get; set; }
+        public Nullable<int> creator_ID { get; set; }
     
         public virtual Question Question { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual Profile Profile { get; set; }
     }
 }

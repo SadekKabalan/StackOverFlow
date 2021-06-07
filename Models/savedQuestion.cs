@@ -12,15 +12,13 @@ namespace StackOverFlow.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class uni_fact_branch
+    public partial class savedQuestion
     {
-        public Nullable<int> university_ID { get; set; }
-        public Nullable<int> branch_ID { get; set; }
-        public Nullable<int> factulty_ID { get; set; }
-        public int id { get; set; }
+        public int savedQuestions_ID { get; set; }
+        public Nullable<int> creator_ID { get; set; }
+        public Nullable<int> question_ID { get; set; }
     
-        public virtual Branch Branch { get; set; }
-        public virtual Factulty Factulty { get; set; }
-        public virtual University University { get; set; }
+        public virtual Profile Profile { get; set; }
+        public virtual Question Question { get; set; }
     }
 }

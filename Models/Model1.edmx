@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StackOverFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="StackOverFlowModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Answers">
           <Key>
             <PropertyRef Name="answer_ID" />
@@ -16,13 +16,7 @@
           <Property Name="date" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="imagePath" Type="varchar" MaxLength="255" />
           <Property Name="question_ID" Type="int" />
-        </EntityType>
-        <EntityType Name="Branches">
-          <Key>
-            <PropertyRef Name="branch_ID" />
-          </Key>
-          <Property Name="branch_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="creator_ID" Type="int" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -34,13 +28,17 @@
           <Property Name="creator_ID" Type="int" />
           <Property Name="question_ID" Type="int" />
           <Property Name="answer_ID" Type="int" />
+          <Property Name="journey_ID" Type="int" />
         </EntityType>
-        <EntityType Name="Factulties">
+        <EntityType Name="Journeys">
           <Key>
-            <PropertyRef Name="factulty_ID" />
+            <PropertyRef Name="journey_ID" />
           </Key>
-          <Property Name="factulty_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="journey_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="creator_ID" Type="int" />
+          <Property Name="title" Type="varchar" MaxLength="255" />
+          <Property Name="body" Type="varchar(max)" />
+          <Property Name="date" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Profiles">
           <Key>
@@ -52,6 +50,7 @@
           <Property Name="username" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="major" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="university_ID" Type="int" />
+          <Property Name="remember" Type="bit" />
         </EntityType>
         <EntityType Name="Questions">
           <Key>
@@ -63,6 +62,14 @@
           <Property Name="date" Type="nvarchar(max)" />
           <Property Name="imagePath" Type="varchar" MaxLength="255" />
           <Property Name="creator_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="savedQuestions">
+          <Key>
+            <PropertyRef Name="savedQuestions_ID" />
+          </Key>
+          <Property Name="savedQuestions_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="creator_ID" Type="int" />
+          <Property Name="question_ID" Type="int" />
         </EntityType>
         <EntityType Name="tag_question">
           <Key>
@@ -78,15 +85,6 @@
           </Key>
           <Property Name="tag_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="tagText" Type="varchar" MaxLength="255" />
-        </EntityType>
-        <EntityType Name="uni_fact_branch">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="university_ID" Type="int" />
-          <Property Name="branch_ID" Type="int" />
-          <Property Name="factulty_ID" Type="int" />
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Universities">
           <Key>
@@ -104,6 +102,18 @@
             </Principal>
             <Dependent Role="Answers">
               <PropertyRef Name="question_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Answers__creator__607251E5">
+          <End Role="Profiles" Type="Self.Profiles" Multiplicity="0..1" />
+          <End Role="Answers" Type="Self.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profiles">
+              <PropertyRef Name="creator_ID" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="creator_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -143,6 +153,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Comments__journe__7E02B4CC">
+          <End Role="Journeys" Type="Self.Journeys" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Journeys">
+              <PropertyRef Name="journey_ID" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="journey_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Journeys__creato__7D0E9093">
+          <End Role="Profiles" Type="Self.Profiles" Multiplicity="0..1" />
+          <End Role="Journeys" Type="Self.Journeys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profiles">
+              <PropertyRef Name="creator_ID" />
+            </Principal>
+            <Dependent Role="Journeys">
+              <PropertyRef Name="creator_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Profile__univers__2E1BDC42">
           <End Role="Universities" Type="Self.Universities" Multiplicity="0..1" />
           <End Role="Profiles" Type="Self.Profiles" Multiplicity="*" />
@@ -164,6 +198,30 @@
             </Principal>
             <Dependent Role="Questions">
               <PropertyRef Name="creator_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__savedQues__creat__76619304">
+          <End Role="Profiles" Type="Self.Profiles" Multiplicity="0..1" />
+          <End Role="savedQuestions" Type="Self.savedQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profiles">
+              <PropertyRef Name="creator_ID" />
+            </Principal>
+            <Dependent Role="savedQuestions">
+              <PropertyRef Name="creator_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__savedQues__quest__7755B73D">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="0..1" />
+          <End Role="savedQuestions" Type="Self.savedQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="question_ID" />
+            </Principal>
+            <Dependent Role="savedQuestions">
+              <PropertyRef Name="question_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -191,55 +249,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__uni_fact___branc__2A4B4B5E">
-          <End Role="Branches" Type="Self.Branches" Multiplicity="0..1" />
-          <End Role="uni_fact_branch" Type="Self.uni_fact_branch" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Branches">
-              <PropertyRef Name="branch_ID" />
-            </Principal>
-            <Dependent Role="uni_fact_branch">
-              <PropertyRef Name="branch_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__uni_fact___factu__2B3F6F97">
-          <End Role="Factulties" Type="Self.Factulties" Multiplicity="0..1" />
-          <End Role="uni_fact_branch" Type="Self.uni_fact_branch" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Factulties">
-              <PropertyRef Name="factulty_ID" />
-            </Principal>
-            <Dependent Role="uni_fact_branch">
-              <PropertyRef Name="factulty_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__uni_fact___unive__29572725">
-          <End Role="Universities" Type="Self.Universities" Multiplicity="0..1" />
-          <End Role="uni_fact_branch" Type="Self.uni_fact_branch" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Universities">
-              <PropertyRef Name="university_ID" />
-            </Principal>
-            <Dependent Role="uni_fact_branch">
-              <PropertyRef Name="university_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="StackOverFlowModelStoreContainer">
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Branches" EntityType="Self.Branches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Factulties" EntityType="Self.Factulties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Journeys" EntityType="Self.Journeys" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profiles" EntityType="Self.Profiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="savedQuestions" EntityType="Self.savedQuestions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tag_question" EntityType="Self.tag_question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="uni_fact_branch" EntityType="Self.uni_fact_branch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Universities" EntityType="Self.Universities" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Answer__question__33D4B598" Association="Self.FK__Answer__question__33D4B598">
             <End Role="Questions" EntitySet="Questions" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Answers__creator__607251E5" Association="Self.FK__Answers__creator__607251E5">
+            <End Role="Profiles" EntitySet="Profiles" />
             <End Role="Answers" EntitySet="Answers" />
           </AssociationSet>
           <AssociationSet Name="FK__Comment__answer___38996AB5" Association="Self.FK__Comment__answer___38996AB5">
@@ -254,6 +279,14 @@
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
+          <AssociationSet Name="FK__Comments__journe__7E02B4CC" Association="Self.FK__Comments__journe__7E02B4CC">
+            <End Role="Journeys" EntitySet="Journeys" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Journeys__creato__7D0E9093" Association="Self.FK__Journeys__creato__7D0E9093">
+            <End Role="Profiles" EntitySet="Profiles" />
+            <End Role="Journeys" EntitySet="Journeys" />
+          </AssociationSet>
           <AssociationSet Name="FK__Profile__univers__2E1BDC42" Association="Self.FK__Profile__univers__2E1BDC42">
             <End Role="Universities" EntitySet="Universities" />
             <End Role="Profiles" EntitySet="Profiles" />
@@ -261,6 +294,14 @@
           <AssociationSet Name="FK__Question__creato__30F848ED" Association="Self.FK__Question__creato__30F848ED">
             <End Role="Profiles" EntitySet="Profiles" />
             <End Role="Questions" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__savedQues__creat__76619304" Association="Self.FK__savedQues__creat__76619304">
+            <End Role="Profiles" EntitySet="Profiles" />
+            <End Role="savedQuestions" EntitySet="savedQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__savedQues__quest__7755B73D" Association="Self.FK__savedQues__quest__7755B73D">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="savedQuestions" EntitySet="savedQuestions" />
           </AssociationSet>
           <AssociationSet Name="FK__tag_quest__quest__3C69FB99" Association="Self.FK__tag_quest__quest__3C69FB99">
             <End Role="Questions" EntitySet="Questions" />
@@ -270,21 +311,8 @@
             <End Role="Tags" EntitySet="Tags" />
             <End Role="tag_question" EntitySet="tag_question" />
           </AssociationSet>
-          <AssociationSet Name="FK__uni_fact___branc__2A4B4B5E" Association="Self.FK__uni_fact___branc__2A4B4B5E">
-            <End Role="Branches" EntitySet="Branches" />
-            <End Role="uni_fact_branch" EntitySet="uni_fact_branch" />
-          </AssociationSet>
-          <AssociationSet Name="FK__uni_fact___factu__2B3F6F97" Association="Self.FK__uni_fact___factu__2B3F6F97">
-            <End Role="Factulties" EntitySet="Factulties" />
-            <End Role="uni_fact_branch" EntitySet="uni_fact_branch" />
-          </AssociationSet>
-          <AssociationSet Name="FK__uni_fact___unive__29572725" Association="Self.FK__uni_fact___unive__29572725">
-            <End Role="Universities" EntitySet="Universities" />
-            <End Role="uni_fact_branch" EntitySet="uni_fact_branch" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StackOverFlowModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -301,14 +329,8 @@
           <Property Name="question_ID" Type="Int32" />
           <NavigationProperty Name="Question" Relationship="Self.FK__Answer__question__33D4B598" FromRole="Answers" ToRole="Questions" />
           <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__answer___38996AB5" FromRole="Answers" ToRole="Comments" />
-        </EntityType>
-        <EntityType Name="Branch">
-          <Key>
-            <PropertyRef Name="branch_ID" />
-          </Key>
-          <Property Name="branch_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="uni_fact_branch" Relationship="Self.FK__uni_fact___branc__2A4B4B5E" FromRole="Branches" ToRole="uni_fact_branch" />
+          <Property Name="creator_ID" Type="Int32" />
+          <NavigationProperty Name="Profile" Relationship="StackOverFlowModel.FK__Answers__creator__607251E5" FromRole="Answer" ToRole="Profile" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -323,14 +345,8 @@
           <NavigationProperty Name="Answer" Relationship="Self.FK__Comment__answer___38996AB5" FromRole="Comments" ToRole="Answers" />
           <NavigationProperty Name="Profile" Relationship="Self.FK__Comment__creator__36B12243" FromRole="Comments" ToRole="Profiles" />
           <NavigationProperty Name="Question" Relationship="Self.FK__Comment__questio__37A5467C" FromRole="Comments" ToRole="Questions" />
-        </EntityType>
-        <EntityType Name="Factulty">
-          <Key>
-            <PropertyRef Name="factulty_ID" />
-          </Key>
-          <Property Name="factulty_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="uni_fact_branch" Relationship="Self.FK__uni_fact___factu__2B3F6F97" FromRole="Factulties" ToRole="uni_fact_branch" />
+          <Property Name="journey_ID" Type="Int32" />
+          <NavigationProperty Name="Journey" Relationship="StackOverFlowModel.FK__Comments__journe__7E02B4CC" FromRole="Comment" ToRole="Journey" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
@@ -345,6 +361,10 @@
           <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__creator__36B12243" FromRole="Profiles" ToRole="Comments" />
           <NavigationProperty Name="University" Relationship="Self.FK__Profile__univers__2E1BDC42" FromRole="Profiles" ToRole="Universities" />
           <NavigationProperty Name="Questions" Relationship="Self.FK__Question__creato__30F848ED" FromRole="Profiles" ToRole="Questions" />
+          <NavigationProperty Name="Answers" Relationship="StackOverFlowModel.FK__Answers__creator__607251E5" FromRole="Profile" ToRole="Answer" />
+          <NavigationProperty Name="savedQuestions" Relationship="StackOverFlowModel.FK__savedQues__creat__76619304" FromRole="Profile" ToRole="savedQuestion" />
+          <Property Name="remember" Type="Boolean" />
+          <NavigationProperty Name="Journeys" Relationship="StackOverFlowModel.FK__Journeys__creato__7D0E9093" FromRole="Profile" ToRole="Journey" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -360,6 +380,7 @@
           <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__questio__37A5467C" FromRole="Questions" ToRole="Comments" />
           <NavigationProperty Name="Profile" Relationship="Self.FK__Question__creato__30F848ED" FromRole="Questions" ToRole="Profiles" />
           <NavigationProperty Name="tag_question" Relationship="Self.FK__tag_quest__quest__3C69FB99" FromRole="Questions" ToRole="tag_question" />
+          <NavigationProperty Name="savedQuestions" Relationship="StackOverFlowModel.FK__savedQues__quest__7755B73D" FromRole="Question" ToRole="savedQuestion" />
         </EntityType>
         <EntityType Name="tag_question">
           <Key>
@@ -379,18 +400,6 @@
           <Property Name="tagText" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tag_question" Relationship="Self.FK__tag_quest__tag_I__3D5E1FD2" FromRole="Tags" ToRole="tag_question" />
         </EntityType>
-        <EntityType Name="uni_fact_branch">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="university_ID" Type="Int32" />
-          <Property Name="branch_ID" Type="Int32" />
-          <Property Name="factulty_ID" Type="Int32" />
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Branch" Relationship="Self.FK__uni_fact___branc__2A4B4B5E" FromRole="uni_fact_branch" ToRole="Branches" />
-          <NavigationProperty Name="Factulty" Relationship="Self.FK__uni_fact___factu__2B3F6F97" FromRole="uni_fact_branch" ToRole="Factulties" />
-          <NavigationProperty Name="University" Relationship="Self.FK__uni_fact___unive__29572725" FromRole="uni_fact_branch" ToRole="Universities" />
-        </EntityType>
         <EntityType Name="University">
           <Key>
             <PropertyRef Name="university_ID" />
@@ -398,7 +407,6 @@
           <Property Name="university_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Profiles" Relationship="Self.FK__Profile__univers__2E1BDC42" FromRole="Universities" ToRole="Profiles" />
-          <NavigationProperty Name="uni_fact_branch" Relationship="Self.FK__uni_fact___unive__29572725" FromRole="Universities" ToRole="uni_fact_branch" />
         </EntityType>
         <Association Name="FK__Answer__question__33D4B598">
           <End Role="Questions" Type="Self.Question" Multiplicity="0..1" />
@@ -424,18 +432,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__uni_fact___branc__2A4B4B5E">
-          <End Role="Branches" Type="Self.Branch" Multiplicity="0..1" />
-          <End Role="uni_fact_branch" Type="Self.uni_fact_branch" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Branches">
-              <PropertyRef Name="branch_ID" />
-            </Principal>
-            <Dependent Role="uni_fact_branch">
-              <PropertyRef Name="branch_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Comment__creator__36B12243">
           <End Role="Profiles" Type="Self.Profile" Multiplicity="0..1" />
           <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
@@ -457,18 +453,6 @@
             </Principal>
             <Dependent Role="Comments">
               <PropertyRef Name="question_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__uni_fact___factu__2B3F6F97">
-          <End Role="Factulties" Type="Self.Factulty" Multiplicity="0..1" />
-          <End Role="uni_fact_branch" Type="Self.uni_fact_branch" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Factulties">
-              <PropertyRef Name="factulty_ID" />
-            </Principal>
-            <Dependent Role="uni_fact_branch">
-              <PropertyRef Name="factulty_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -520,28 +504,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__uni_fact___unive__29572725">
-          <End Role="Universities" Type="Self.University" Multiplicity="0..1" />
-          <End Role="uni_fact_branch" Type="Self.uni_fact_branch" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Universities">
-              <PropertyRef Name="university_ID" />
-            </Principal>
-            <Dependent Role="uni_fact_branch">
-              <PropertyRef Name="university_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="FlowEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Answers" EntityType="Self.Answer" />
-          <EntitySet Name="Branches" EntityType="Self.Branch" />
           <EntitySet Name="Comments" EntityType="Self.Comment" />
-          <EntitySet Name="Factulties" EntityType="Self.Factulty" />
           <EntitySet Name="Profiles" EntityType="Self.Profile" />
           <EntitySet Name="Questions" EntityType="Self.Question" />
           <EntitySet Name="tag_question" EntityType="Self.tag_question" />
           <EntitySet Name="Tags" EntityType="Self.Tag" />
-          <EntitySet Name="uni_fact_branch" EntityType="Self.uni_fact_branch" />
           <EntitySet Name="Universities" EntityType="Self.University" />
           <AssociationSet Name="FK__Answer__question__33D4B598" Association="Self.FK__Answer__question__33D4B598">
             <End Role="Questions" EntitySet="Questions" />
@@ -551,10 +520,6 @@
             <End Role="Answers" EntitySet="Answers" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
-          <AssociationSet Name="FK__uni_fact___branc__2A4B4B5E" Association="Self.FK__uni_fact___branc__2A4B4B5E">
-            <End Role="Branches" EntitySet="Branches" />
-            <End Role="uni_fact_branch" EntitySet="uni_fact_branch" />
-          </AssociationSet>
           <AssociationSet Name="FK__Comment__creator__36B12243" Association="Self.FK__Comment__creator__36B12243">
             <End Role="Profiles" EntitySet="Profiles" />
             <End Role="Comments" EntitySet="Comments" />
@@ -562,10 +527,6 @@
           <AssociationSet Name="FK__Comment__questio__37A5467C" Association="Self.FK__Comment__questio__37A5467C">
             <End Role="Questions" EntitySet="Questions" />
             <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK__uni_fact___factu__2B3F6F97" Association="Self.FK__uni_fact___factu__2B3F6F97">
-            <End Role="Factulties" EntitySet="Factulties" />
-            <End Role="uni_fact_branch" EntitySet="uni_fact_branch" />
           </AssociationSet>
           <AssociationSet Name="FK__Profile__univers__2E1BDC42" Association="Self.FK__Profile__univers__2E1BDC42">
             <End Role="Universities" EntitySet="Universities" />
@@ -583,11 +544,111 @@
             <End Role="Tags" EntitySet="Tags" />
             <End Role="tag_question" EntitySet="tag_question" />
           </AssociationSet>
-          <AssociationSet Name="FK__uni_fact___unive__29572725" Association="Self.FK__uni_fact___unive__29572725">
-            <End Role="Universities" EntitySet="Universities" />
-            <End Role="uni_fact_branch" EntitySet="uni_fact_branch" />
+          <AssociationSet Name="FK__Answers__creator__607251E5" Association="StackOverFlowModel.FK__Answers__creator__607251E5">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <EntitySet Name="savedQuestions" EntityType="StackOverFlowModel.savedQuestion" />
+          <AssociationSet Name="FK__savedQues__creat__76619304" Association="StackOverFlowModel.FK__savedQues__creat__76619304">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="savedQuestion" EntitySet="savedQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__savedQues__quest__7755B73D" Association="StackOverFlowModel.FK__savedQues__quest__7755B73D">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="savedQuestion" EntitySet="savedQuestions" />
+          </AssociationSet>
+          <EntitySet Name="Journeys" EntityType="StackOverFlowModel.Journey" />
+          <AssociationSet Name="FK__Journeys__creato__7D0E9093" Association="StackOverFlowModel.FK__Journeys__creato__7D0E9093">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="Journey" EntitySet="Journeys" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comments__journe__7E02B4CC" Association="StackOverFlowModel.FK__Comments__journe__7E02B4CC">
+            <End Role="Journey" EntitySet="Journeys" />
+            <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
         </EntityContainer>
+        <Association Name="FK__Answers__creator__607251E5">
+          <End Type="StackOverFlowModel.Profile" Role="Profile" Multiplicity="0..1" />
+          <End Type="StackOverFlowModel.Answer" Role="Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="creator_ID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="creator_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="savedQuestion">
+          <Key>
+            <PropertyRef Name="savedQuestions_ID" />
+          </Key>
+          <Property Name="savedQuestions_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="creator_ID" Type="Int32" />
+          <Property Name="question_ID" Type="Int32" />
+          <NavigationProperty Name="Profile" Relationship="StackOverFlowModel.FK__savedQues__creat__76619304" FromRole="savedQuestion" ToRole="Profile" />
+          <NavigationProperty Name="Question" Relationship="StackOverFlowModel.FK__savedQues__quest__7755B73D" FromRole="savedQuestion" ToRole="Question" />
+        </EntityType>
+        <Association Name="FK__savedQues__creat__76619304">
+          <End Type="StackOverFlowModel.Profile" Role="Profile" Multiplicity="0..1" />
+          <End Type="StackOverFlowModel.savedQuestion" Role="savedQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="creator_ID" />
+            </Principal>
+            <Dependent Role="savedQuestion">
+              <PropertyRef Name="creator_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__savedQues__quest__7755B73D">
+          <End Type="StackOverFlowModel.Question" Role="Question" Multiplicity="0..1" />
+          <End Type="StackOverFlowModel.savedQuestion" Role="savedQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="question_ID" />
+            </Principal>
+            <Dependent Role="savedQuestion">
+              <PropertyRef Name="question_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Journey">
+          <Key>
+            <PropertyRef Name="journey_ID" />
+          </Key>
+          <Property Name="journey_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="creator_ID" Type="Int32" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="body" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Profile" Relationship="StackOverFlowModel.FK__Journeys__creato__7D0E9093" FromRole="Journey" ToRole="Profile" />
+          <Property Name="date" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Comments" Relationship="StackOverFlowModel.FK__Comments__journe__7E02B4CC" FromRole="Journey" ToRole="Comment" />
+        </EntityType>
+        <Association Name="FK__Journeys__creato__7D0E9093">
+          <End Type="StackOverFlowModel.Profile" Role="Profile" Multiplicity="0..1" />
+          <End Type="StackOverFlowModel.Journey" Role="Journey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="creator_ID" />
+            </Principal>
+            <Dependent Role="Journey">
+              <PropertyRef Name="creator_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comments__journe__7E02B4CC">
+          <End Type="StackOverFlowModel.Journey" Role="Journey" Multiplicity="0..1" />
+          <End Type="StackOverFlowModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Journey">
+              <PropertyRef Name="journey_ID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="journey_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -597,6 +658,7 @@
           <EntitySetMapping Name="Answers">
             <EntityTypeMapping TypeName="StackOverFlowModel.Answer">
               <MappingFragment StoreEntitySet="Answers">
+                <ScalarProperty Name="creator_ID" ColumnName="creator_ID" />
                 <ScalarProperty Name="answer_ID" ColumnName="answer_ID" />
                 <ScalarProperty Name="text" ColumnName="text" />
                 <ScalarProperty Name="votes" ColumnName="votes" />
@@ -607,17 +669,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Branches">
-            <EntityTypeMapping TypeName="StackOverFlowModel.Branch">
-              <MappingFragment StoreEntitySet="Branches">
-                <ScalarProperty Name="branch_ID" ColumnName="branch_ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="StackOverFlowModel.Comment">
               <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="journey_ID" ColumnName="journey_ID" />
                 <ScalarProperty Name="comment_ID" ColumnName="comment_ID" />
                 <ScalarProperty Name="text" ColumnName="text" />
                 <ScalarProperty Name="date" ColumnName="date" />
@@ -627,17 +682,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Factulties">
-            <EntityTypeMapping TypeName="StackOverFlowModel.Factulty">
-              <MappingFragment StoreEntitySet="Factulties">
-                <ScalarProperty Name="factulty_ID" ColumnName="factulty_ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="StackOverFlowModel.Profile">
               <MappingFragment StoreEntitySet="Profiles">
+                <ScalarProperty Name="remember" ColumnName="remember" />
                 <ScalarProperty Name="creator_ID" ColumnName="creator_ID" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -676,21 +724,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="uni_fact_branch">
-            <EntityTypeMapping TypeName="StackOverFlowModel.uni_fact_branch">
-              <MappingFragment StoreEntitySet="uni_fact_branch">
-                <ScalarProperty Name="university_ID" ColumnName="university_ID" />
-                <ScalarProperty Name="branch_ID" ColumnName="branch_ID" />
-                <ScalarProperty Name="factulty_ID" ColumnName="factulty_ID" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Universities">
             <EntityTypeMapping TypeName="StackOverFlowModel.University">
               <MappingFragment StoreEntitySet="Universities">
                 <ScalarProperty Name="university_ID" ColumnName="university_ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="savedQuestions">
+            <EntityTypeMapping TypeName="StackOverFlowModel.savedQuestion">
+              <MappingFragment StoreEntitySet="savedQuestions">
+                <ScalarProperty Name="question_ID" ColumnName="question_ID" />
+                <ScalarProperty Name="creator_ID" ColumnName="creator_ID" />
+                <ScalarProperty Name="savedQuestions_ID" ColumnName="savedQuestions_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Journeys">
+            <EntityTypeMapping TypeName="StackOverFlowModel.Journey">
+              <MappingFragment StoreEntitySet="Journeys">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="body" ColumnName="body" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="creator_ID" ColumnName="creator_ID" />
+                <ScalarProperty Name="journey_ID" ColumnName="journey_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

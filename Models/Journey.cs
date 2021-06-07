@@ -12,18 +12,22 @@ namespace StackOverFlow.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Branch
+    public partial class Journey
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Branch()
+        public Journey()
         {
-            this.uni_fact_branch = new HashSet<uni_fact_branch>();
+            this.Comments = new HashSet<Comment>();
         }
     
-        public int branch_ID { get; set; }
-        public string Name { get; set; }
+        public int journey_ID { get; set; }
+        public Nullable<int> creator_ID { get; set; }
+        public string title { get; set; }
+        public string body { get; set; }
+        public string date { get; set; }
     
+        public virtual Profile Profile { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<uni_fact_branch> uni_fact_branch { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

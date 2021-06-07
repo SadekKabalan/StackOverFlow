@@ -1,0 +1,70 @@
+﻿@model IEnumerable<StackOverFlow.Models.QuestionTagView>
+@{
+    ViewBag.Title = "Questions";
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
+}
+
+
+<body>
+    @{
+        <div class="container">
+            @foreach (var quest in Model)
+            {
+                string res = quest.GetDivColor(quest.isCorrect, quest.nbAnswers);
+                <div class="row" style="border:solid 2px black; margin-top:10px; margin-bottom:10px; background-color:@(res) ;">
+                    <div class="col-1 text-center">
+                        <div style="margin-top:50%;"><label class="mx-2">@quest.nbAnswers</label><i><img src="~/assest/speech-bubble.png" style="width:25px; height:25px;" /></i></div>
+                    </div>
+                    <div class="col-11">
+                        <p style="font-size:22px; color:royalblue; ">@Html.ActionLink(quest.title, "questionDetails", "Question", new { id = quest.question_ID, pageIndex = quest.pageIndxer }, new { @style = "text-decoration:none;" })</p>
+                        <p>
+                            tags:
+                            @foreach (var tag in quest.tag)
+                            {
+                                <label class="mx-3 px-2" style="background-color:lightgray;">@tag</label>
+                            }
+                        <p><label class="mx-2">@quest.date</label><label style="color:royalblue;">by  @quest.creator.username </label> </p>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+    @{
+        <div class="container">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if (Model.FirstOrDefault() != null)
+                    {
+                        if (Model.First().nbPages == 1)
+                        {
+                            <li class="page-item">@Html.ActionLink("1", "tagDetails", "Question", new { nbPages = 1 }, new { @class = "page-link" })</li>
+                        }
+                        else if (Model.First().nbPages > 1 && Model.First().pageIndxer == 1)
+                        {
+                            <li class="page-item">@Html.ActionLink("" + Model.First().pageIndxer, "tagDetails", "Question", new { nbPages = Model.First().pageIndxer }, new { @class = "page-link" })</li>
+                            <li class="page-item">@Html.ActionLink("Next", "tagDetails", "Question", new { nbPages = Model.First().pageIndxer + 1 }, new { @class = "page-link" })</li>
+                        }
+
+                        else if (Model.First().nbPages == Model.First().pageIndxer)
+                        {
+                            <li class="page-item">@Html.ActionLink("Pervious", "tagDetails", "Question", new { nbPages = Model.First().pageIndxer - 1 }, new { @class = "page-link" })</li>
+                            <li class="page-item">@Html.ActionLink("" + Model.First().pageIndxer, "tagDetails", "Question", new { nbPages = Model.First().pageIndxer }, new { @class = "page-link" })</li>
+                        }
+                        else if (Model.First().nbPages >= 2 && Model.First().pageIndxer > 1)
+                        {
+                            <li class="page-item">@Html.ActionLink("Pervious", "tagDetails", "Question", new { nbPages = Model.First().pageIndxer - 1 }, new { @class = "page-link" })</li>
+                            <li class="page-item">@Html.ActionLink("" + Model.First().pageIndxer, "tagDetails", "Question", new { nbPages = Model.First().pageIndxer }, new { @class = "page-link" })</li>
+                            <li class="page-item">@Html.ActionLink("Next", "tagDetails", "Question", new { nbPages = Model.First().pageIndxer + 1 }, new { @class = "page-link" })</li>
+
+
+                        }
+                    }
+
+
+
+                </ul>
+            </nav>
+        </div>
+    }
+</body>

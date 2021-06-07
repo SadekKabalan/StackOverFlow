@@ -1,0 +1,60 @@
+﻿@model StackOverFlow.Models.QuestionTagView
+@{
+    ViewBag.Title = "questionForm";
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
+    string res = "";
+}
+
+<body>
+    <div class="container justify-content-center">
+        <div class="row">
+            <div class="col-12" style="border:2px solid black;">
+                @using (@Html.BeginForm("SubmitEdit", "Question", new { id = Model.question_ID}, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    
+                    <h2>Edit your Question:</h2>
+
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Title:</label>
+                            <div class="form-text">Be specific and imagine you’re asking a question to another person. </div>
+                            @Html.TextBoxFor(model => model.title, new { @class = "form-control" })
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Question Body:</label>
+                            <div class="form-text">Write a well organized description about your problem.</div>
+                            @Html.TextAreaFor(model => model.body, new { @class = "form-control", @style = "height: 100px;" })
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Image Field:</label><br />
+                            <div ><label id="lable_file"  for="files" class="mx-3 p-2" style="border:2px solid black;">Press here to change pic ! </label></div>
+                            @Html.TextBoxFor(model => model.imageFile, new { @class = "hidden", @type = "file", @id = "files", @name = "files", @style = "display:none;" })
+
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Tags:</label>
+                            <div class="form-text">Add up to 5 tags to describe what your question is about</div>
+                            @foreach (var text in Model.tag)
+                            {
+                                res += text + " ";
+                            }
+                            <input class="form-control" placeholder="e.g (java matrix organic heart) ..." value="@res" name="tag" />
+
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Apply Modifications </button>
+                        </div>
+
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+    <script>
+     $("#files").change(function(){
+        $("#lable_file").html($(this).val().split("\\").splice(-1,1)[0] || "Select file");
+     });
+    </script>
+</body>

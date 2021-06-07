@@ -20,9 +20,11 @@ namespace StackOverFlow.Models
         public Nullable<int> creator_ID { get; set; }
         public Nullable<int> question_ID { get; set; }
         public Nullable<int> answer_ID { get; set; }
+        public Nullable<int> journey_ID { get; set; }
     
         public virtual Answer Answer { get; set; }
         public virtual Profile Profile { get; set; }
         public virtual Question Question { get; set; }
+        public virtual Journey Journey { get; set; }
     }
 }

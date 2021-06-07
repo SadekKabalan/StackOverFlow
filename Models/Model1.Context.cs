@@ -26,14 +26,13 @@ namespace StackOverFlow.Models
         }
     
         public virtual DbSet<Answer> Answers { get; set; }
-        public virtual DbSet<Branch> Branches { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
-        public virtual DbSet<Factulty> Factulties { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<tag_question> tag_question { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
-        public virtual DbSet<uni_fact_branch> uni_fact_branch { get; set; }
         public virtual DbSet<University> Universities { get; set; }
+        public virtual DbSet<savedQuestion> savedQuestions { get; set; }
+        public virtual DbSet<Journey> Journeys { get; set; }
     }
 }

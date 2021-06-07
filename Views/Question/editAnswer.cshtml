@@ -1,0 +1,44 @@
+﻿@model StackOverFlow.Models.Answer
+@{
+    ViewBag.Title = "questionForm";
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
+}
+
+<body>
+    <div class="container justify-content-center">
+        <div class="row">
+            <div class="col-12" style="border:2px solid black;">
+                @using (@Html.BeginForm("SubmitEditAnswer", "Question", new { id = Model.question_ID ,ansID=Model.answer_ID}, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+
+                    <h2>Edit your Answer:</h2>
+
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">Answer Body:</label>
+                            <div class="form-text">Write a well organized description about your Solution.</div>
+                            @Html.TextAreaFor(model => model.text, new { @class = "form-control", @style = "height: 100px;" })
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Image Field:</label><br />
+                            <div><label id="lable_file" for="formFile" class="mx-3 p-2" style="border:2px solid black;">Press here to change pic ! </label></div>
+                            <input type="file" name="image" class="form-control" id="formFile" style="display:none;"  />
+
+
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Apply Modifications </button>
+                        </div>
+
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+    <script>
+     $("#files").change(function(){
+        $("#lable_file").html($(this).val().split("\\").splice(-1,1)[0] || "Select file");
+     });
+    </script>
+</body>

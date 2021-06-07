@@ -1,0 +1,82 @@
+﻿@model StackOverFlow.Models.journies
+@{
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
+}
+<body>
+    <div class="modal fade" id="shareIt">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h6>Share Link: (link of this question)</h6>
+                    <input type="text" value="@(HttpContext.Current.Request.Url.AbsoluteUri)" class="form-control my-2" id="txt" />
+                    <div>
+                        <label style="margin-top:12px;"><a href="#" onclick="copyToClip()" style="text-decoration:none">Copy To Clipboard!</a></label>
+                        <div class="btn-group" role="group" style="padding-top: 5px; float:right; height:40px;">
+
+                            <a class="btn " href="http://www.facebook.com/sharer/sharer.php?s=100&p[url]=
+                                                  http://www.c-sharpcorner.com/conference2014/#Register&p[images]=
+                                     &p[title]=&p[summary]="><i><img src="~/assest/facebook.png" style="width:24px; height:24px;"></i></a>
+                            <a class="btn " href="https://instagram.com/api/v1/media/upload/"><i><img src="~/assest/instagram.png" style="width:24px; height:24px;"></i></a>
+                            <a class="btn " href="https://twitter.com/intent/tweet"><i><img src="~/assest/twitter.png" style="width:24px; height:24px;"></i></a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid my-3 " style="width:95%!important;">
+        <div class="row my-3" style="border:2px solid black;">
+            <div class="col-12">
+                <h3>@Model.title</h3>
+            </div>
+            <hr style="margin-top:0px!important; margin-bottom:0px!important;" />
+            <div class="col-12 bg-light">
+                <p>@Model.body</p>
+
+            </div><hr style="margin-top:0px!important; margin-bottom:0px!important;" />
+            <div class="col-12" style="background-color:lightblue; height:50px;">
+                <div style="margin-top:12.5px;"><label>by <label style="color:royalblue;">@Model.username</label></label><label style="float:right;">@Model.date</label></div>
+            </div>
+            <div class="col-12">
+                @foreach (var comment in Model.journeyComments)
+                {
+                    <label style=" margin-right:5px; margin-left:15px;">@comment.text</label><label style="color:aqua;">by @Model.GetProfile(comment.creator_ID).username</label><br />
+                }
+            </div>
+            @using (@Html.BeginForm("AddCommentQuestion", "Journey", new { id = Model.journey_ID }))
+            {
+                <div class="col-12 text-center bg-light" style="min-height:35px;">
+                    <label data-bs-toggle="collapse" href="#AddComment" role="button" aria-expanded="true" aria-controls="collapseExample" style="color:deepskyblue; font-size:12px; margin-top:7px;">Add a comment</label>
+
+                    <div class="collapse" id="AddComment" style="margin-bottom:10px; margin-top:10px;">
+
+                        <input type="search" class="form-control" placeholder="Enter your comment here" id="cmnt" name="cmnt">
+
+                    </div>
+                </div>
+            }
+            <div class="col-12 my-3">
+
+                @{<div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#shareIt">Share</button>
+                        @if (Session["username"] != null)
+                        {
+                            if (Model.username.Equals(Session["username"]))
+                            {
+                                @Html.ActionLink("Edit", "edit", "Journey", new { id = Model.journey_ID }, new { @class = "btn btn-secondary" })
+                                @Html.ActionLink("Delete", "deleteJourney", "Journey", new { id = Model.journey_ID, pageIndxer = Model.pageIndxer }, new { @class = "btn btn-danger" })
+                            }
+                        }
+
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</body>

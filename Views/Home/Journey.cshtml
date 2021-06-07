@@ -1,18 +1,65 @@
-﻿
+﻿@model IEnumerable<StackOverFlow.Models.journies>
 @{
-    Layout = null;
+    ViewBag.Title = "Questions";
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Journey</title>
-</head>
 <body>
-    <div> 
-        Hiiii
+
+    <div class="container">
+        @Html.ActionLink("Add Your Journey", "addJourney", "Journey", null, new { @class = "page-link" })
     </div>
+    @{
+        <div class="container">
+            @foreach (var journey in Model)
+            {
+
+                <div class="row" style="border:solid 2px black; margin-top:10px; margin-bottom:10px; ">
+                    <div class="col-12">
+                        <p style="font-size:22px; color:royalblue; ">@Html.ActionLink(journey.title, "journeyDetails", "Journey", new { id = journey.journey_ID, pageIndex = journey.pageIndxer }, new { @style = "text-decoration:none;" })</p>
+                        <p><label class="mx-2">@journey.date</label><label style="color:royalblue;">by  @journey.username </label> </p>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+    <div class="container">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @if (Model.FirstOrDefault() != null)
+                {
+                    if (Model.First().nbPages == 1)
+                    {
+                        <li class="page-item">@Html.ActionLink("1", "Journey", "Home", new { nbPages = 1 }, new { @class = "page-link" })</li>
+                    }
+                    else if (Model.First().nbPages > 1 && Model.First().pageIndxer == 1)
+                    {
+                        <li class="page-item">@Html.ActionLink("" + Model.First().pageIndxer, "Journey", "Home", new { nbPages = Model.First().pageIndxer }, new { @class = "page-link" })</li>
+                        <li class="page-item">@Html.ActionLink("Next", "Journey", "Home", new { nbPages = Model.First().pageIndxer + 1 }, new { @class = "page-link" })</li>
+                    }
+
+                    else if (Model.First().nbPages == Model.First().pageIndxer)
+                    {
+                        <li class="page-item">@Html.ActionLink("Pervious", "Journey", "Home", new { nbPages = Model.First().pageIndxer - 1 }, new { @class = "page-link" })</li>
+                        <li class="page-item">@Html.ActionLink("" + Model.First().pageIndxer, "Journey", "Home", new { nbPages = Model.First().pageIndxer }, new { @class = "page-link" })</li>
+                    }
+                    else if (Model.First().nbPages >= 2 && Model.First().pageIndxer > 1)
+                    {
+                        <li class="page-item">@Html.ActionLink("Pervious", "Journey", "Home", new { nbPages = Model.First().pageIndxer - 1 }, new { @class = "page-link" })</li>
+                        <li class="page-item">@Html.ActionLink("" + Model.First().pageIndxer, "Journey", "Home", new { nbPages = Model.First().pageIndxer }, new { @class = "page-link" })</li>
+                        <li class="page-item">@Html.ActionLink("Next", "Journey", "Home", new { nbPages = Model.First().pageIndxer + 1 }, new { @class = "page-link" })</li>
+
+
+                    }
+                }
+
+
+
+            </ul>
+        </nav>
+    </div>
+    }
+
 </body>
-</html>
