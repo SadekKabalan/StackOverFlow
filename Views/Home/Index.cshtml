@@ -1,6 +1,8 @@
-﻿@{
+﻿@model IEnumerable<StackOverFlow.Models.journies>
+@{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/LayoutPage.cshtml";
+    var count= 0;
 }
 
 
@@ -16,10 +18,11 @@
                         <img src="../assest/stratgy.jpg" class="card-img" style="width: 110px; height: 94px; margin-top: 20px; ">
                         <div class="card-body text-center">
                             <h5 class="card-title " style="text-decoration: bold; color: #3D7CB3; ">STRATEGY</h5>
+
                             <p class="card-text" style=" margin-left: 15px; margin-right: 15px;">Find the best answer to your technical question, help others answer theirs</p>
-                            <a href="#" class="btn btn btn-primary btn-rounded " style="background-color:#3D7CB3; border-radius: 35px; margin-top: 10px; height: 40px; width: 220px;">JOIN OUR COMMUNITY</a>
+                            @Html.ActionLink("JOIN OUR COMMUNITY", "Register", "Profile", null, new { @class = "btn btn btn-primary btn-rounded", @style = "background-color:#3D7CB3; border-radius: 35px; margin-top: 10px; height: 40px; width: 220px;" })
                         </div>
-                        <a href="#" class="link-primary" style=" color:#3D7CB3;  margin-bottom: 35px;">or search content</a>
+                         @Html.ActionLink("or search content","Questions","Home",null,new { @class= "link-primary" , @style= "color:#3D7CB3;  margin-bottom: 35px;" })
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-12">
@@ -85,54 +88,40 @@
 
     <div class="container-fluid" style="background-color:  #3D7CB3; ">
         <div class="container">
+           
             <div class="row">
-                <div class="col-md-4 col-sm-12">
-                    <div class="card" style="width: 22rem; height: 210px; background-color: transparent; margin-top: 50px; margin-bottom: 30px; border: none;">
-                        <img src="../assest/quotation.png" class="card-img-top" style="width: 50px; height: 50px; margin-top: 10px; margin-left: 10px;">
-                        <div class="card-body">
-                            <p class="card-text" style="margin-top: 10px; color: white; font-size: 17px;">This site is very useful i can find multiple solutions for my problem</p>
-                            <p class="card-text" style="margin-top: 10px; color: white;  font-size: 17px;">Sadek Kabalan - LU Student</p>
-                            <hr style="border: none; background-color: black; height:2px; width: 75%; ">
+
+                @foreach (var journey in Model)
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="card" style="width: 22rem; height: 210px; background-color: transparent; margin-top: 50px; margin-bottom: 30px; border: none;">
+                            <img src="~/assest/quotation.png" class="card-img-top" style="width: 50px; height: 50px; margin-top: 10px; margin-left: 10px;">
+                            <div class="card-body">
+                                <p class="card-text" style="margin-top: 10px; color: white; font-size: 17px;">@journey.title</p>
+                                <p class="card-text" style="margin-top: 10px; color: white;  font-size: 17px;">@journey.username / @journey.GetUniversity(journey.GetProfile(journey.creator_ID).university_ID).Name / @journey.GetProfile(journey.creator_ID).major</p>
+                                <hr style="border: none; background-color: black; height:2px; width: 75%; ">
+                            </div>
                         </div>
                     </div>
 
+                }
                 </div>
-                <div class="col-md-4 col-sm-12">
-                    <div class="card" style="width: 22rem; height: 210px; background-color: transparent; margin-top: 50px; margin-bottom: 30px; border: none;">
-                        <img src="../assest/quotation.png" class="card-img-top" style="width: 50px; height: 50px; margin-top: 10px; margin-left: 10px;">
-                        <div class="card-body">
-                            <p class="card-text" style="margin-top: 10px; color: white; font-size: 17px;">This site is very useful i can find multiple solutions for my problem</p>
-                            <p class="card-text" style="margin-top: 10px; color: white;  font-size: 17px;">Sadek Kabalan - LU Student</p>
-                            <hr style="border: none; background-color: black; height:2px; width: 75%; ">
-                        </div>
-                    </div>
-
-
-
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <div class="card" style="width: 22rem; height: 210px; background-color: transparent; margin-top: 50px; margin-bottom: 30px; border: none;">
-                        <img src="../assest/quotation.png" class="card-img-top" style="width: 50px; height: 50px; margin-top: 10px; margin-left: 10px;">
-                        <div class="card-body">
-                            <p class="card-text" style="margin-top: 10px; color: white; font-size: 17px;">This site is very useful i can find multiple solutions for my problem</p>
-                            <p class="card-text" style="margin-top: 10px; color: white;  font-size: 17px;">Sadek Kabalan - LU Student</p>
-                            <hr style="border: none; background-color: black; height:2px; width: 75%; ">
-                        </div>
+            
+        
+            <div class="row">
+                <div class="col">
+                    <div class="text-center">
+                       @using (@Html.BeginForm("Journey", "Home", FormMethod.Post))
+                       {
+                        <button type="submit" class="btn btn-light" style="margin-bottom: 30px;">Show More <i><img src="../assest/right.png" style="height: 17px; width: 17px;"></i></button>
+                        }
                     </div>
                 </div>
-
-
-                <div class="row">
-                    <div class="col">
-                        <div class="text-center">
-                            <button type="button" class="btn btn-light" style="margin-bottom: 30px;">Show More <i><img src="../assest/right.png" style="height: 17px; width: 17px;"></i></button>
-                        </div>
-                    </div>
-
-                </div>
+                
             </div>
         </div>
-    </div>
+            </div>
+   
 
   
 </body>

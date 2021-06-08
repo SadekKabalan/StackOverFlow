@@ -9,26 +9,26 @@ namespace StackOverFlow.Models
     public class QuestionTagView
     {
         FlowEntities db = new FlowEntities();
-         public QuestionTagView()
+        public QuestionTagView()
         {
 
         }
-        
+
         public int question_ID { get; set; }
         [Required]
-        [StringLength(maximumLength:255,ErrorMessage ="The title should be formed at least from 30 charecter",MinimumLength =30)]
+        [StringLength(maximumLength: 255, ErrorMessage = "The title should be formed at least from 30 charecter", MinimumLength = 30)]
         public string title { get; set; }
         [Required]
-        [StringLength(5000000,ErrorMessage ="The body should be form at least from 255 charcter (one line)",MinimumLength =255)]
+        [StringLength(5000000, ErrorMessage = "The body should be form at least from 255 charcter (one line)", MinimumLength = 255)]
         public string body { get; set; }
 
         public string imagePath { get; set; }
-        [Required(ErrorMessage ="Cannot be empty")]
+        [Required(ErrorMessage = "Cannot be empty")]
         public List<string> tag { get; set; }
 
         public List<Comment> questionComments { get; set; }
         public List<Answer> answers { get; set; }
-        public List<List<Comment>>answersComments { get; set; } = new List<List<Comment>>();
+        public List<List<Comment>> answersComments { get; set; } = new List<List<Comment>>();
 
         public string date { get; set; }
 
@@ -37,7 +37,9 @@ namespace StackOverFlow.Models
 
         public int nbPages { get; set; }
 
-        public int pageIndxer { get;set; }
+        public int pageIndxer { get; set; }
+
+        public List<string> universities{ get; set; }
 
         public HttpPostedFileBase imageFile { get; set; }
 

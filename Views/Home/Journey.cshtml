@@ -7,8 +7,15 @@
 
 <body>
 
-    <div class="container">
-        @Html.ActionLink("Add Your Journey", "addJourney", "Journey", null, new { @class = "page-link" })
+    <div class="container my-3" style="width:90%">
+        <div class="row">
+            <div class="col-9" style="width:65%">
+                <h4 style="font-style:italic;">Be one of those who influence others and share them your experience </h4>
+            </div>
+            <div class="col-3 text-center">
+                @Html.ActionLink("Add Your Journey", "addJourney", "Journey", null, new { @class = "page-link" })
+            </div>
+        </div>
     </div>
     @{
         <div class="container">
@@ -17,8 +24,8 @@
 
                 <div class="row" style="border:solid 2px black; margin-top:10px; margin-bottom:10px; ">
                     <div class="col-12">
-                        <p style="font-size:22px; color:royalblue; ">@Html.ActionLink(journey.title, "journeyDetails", "Journey", new { id = journey.journey_ID, pageIndex = journey.pageIndxer }, new { @style = "text-decoration:none;" })</p>
-                        <p><label class="mx-2">@journey.date</label><label style="color:royalblue;">by  @journey.username </label> </p>
+                        <p style="font-size:22px; color:royalblue; ">" @Html.ActionLink(journey.title, "journeyDetails", "Journey", new { id = journey.journey_ID, pageIndex = journey.pageIndxer }, new { @style = "text-decoration:none;" }) "</p>
+                        <p><label class="mx-2"> IN @journey.date</label><label style="color:royalblue;">by  @journey.username / @journey.GetUniversity(journey.GetProfile(journey.creator_ID).university_ID).Name /  @journey.GetProfile(journey.creator_ID).major </label> </p>
                     </div>
                 </div>
             }
@@ -60,6 +67,6 @@
             </ul>
         </nav>
     </div>
-    }
+    
 
 </body>

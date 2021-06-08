@@ -44,9 +44,9 @@
             <div class="col-12 text-center">
                 <nav class="navbar navbar-expand navbar-light  text-center" style="display:inline-block;">
                     <div class="navbar-nav text-center">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        <a class="nav-link" href="#">Questions</a>
-                        <a class="nav-link" href="#">Students'journey</a>
+                        @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-item nav-link mx-2 navdecoration active" })
+                        @Html.ActionLink("Qustions", "Questions", "Home", new { nbPages = 1 }, new { @class = "nav-item nav-link mx-2 navdecoration active" })
+                        @Html.ActionLink("Student's Journey", "Journey", "Home", null, new { @class = "nav-item nav-link mx-2 navdecoration active" })
                     </div>
                 </nav>
             </div>

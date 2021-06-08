@@ -22,6 +22,8 @@ namespace StackOverFlow.Models
             this.Answers = new HashSet<Answer>();
             this.savedQuestions = new HashSet<savedQuestion>();
             this.Journeys = new HashSet<Journey>();
+            this.isVoteds = new HashSet<isVoted>();
+            this.isVotedDowns = new HashSet<isVotedDown>();
         }
     
         public int creator_ID { get; set; }
@@ -43,7 +45,10 @@ namespace StackOverFlow.Models
         public virtual ICollection<savedQuestion> savedQuestions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Journey> Journeys { get; set; }
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<isVoted> isVoteds { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<isVotedDown> isVotedDowns { get; set; }
         public List<string> Universities { get; set; }
     }
 }

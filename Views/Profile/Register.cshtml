@@ -29,13 +29,12 @@
                     </div><!-- form-group end.// --><div class="form-row">
                         <div class="form-group col-md-6">
                             <label>University:</label>
-                            <input type="text" name="example" list="exampleList" style="margin-top:10px;">
+                            <input type="text" name="university" list="exampleList" style="margin-top:15px;">
                             <datalist id="exampleList">
                                 @foreach (var uni in Model.Universities)
                                 {
-                <option value="@uni">@uni</option>}
+                                   <option>@uni</option>}
                             </datalist>
-
                         </div> <!-- form-group end.// -->
                         <div class="form-group col-md-6">
                             <label>Major</label>

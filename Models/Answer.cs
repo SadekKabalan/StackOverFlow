@@ -18,6 +18,8 @@ namespace StackOverFlow.Models
         public Answer()
         {
             this.Comments = new HashSet<Comment>();
+            this.isVoteds = new HashSet<isVoted>();
+            this.isVotedDowns = new HashSet<isVotedDown>();
         }
     
         public int answer_ID { get; set; }
@@ -33,5 +35,9 @@ namespace StackOverFlow.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual Profile Profile { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<isVoted> isVoteds { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<isVotedDown> isVotedDowns { get; set; }
     }
 }

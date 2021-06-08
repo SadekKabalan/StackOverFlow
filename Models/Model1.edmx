@@ -30,6 +30,22 @@
           <Property Name="answer_ID" Type="int" />
           <Property Name="journey_ID" Type="int" />
         </EntityType>
+        <EntityType Name="isVoted">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="answer_ID" Type="int" />
+          <Property Name="creator_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="isVotedDown">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="answer_ID" Type="int" />
+          <Property Name="creator_ID" Type="int" />
+        </EntityType>
         <EntityType Name="Journeys">
           <Key>
             <PropertyRef Name="journey_ID" />
@@ -165,6 +181,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__isVoted__answer___00DF2177">
+          <End Role="Answers" Type="Self.Answers" Multiplicity="0..1" />
+          <End Role="isVoted" Type="Self.isVoted" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="answer_ID" />
+            </Principal>
+            <Dependent Role="isVoted">
+              <PropertyRef Name="answer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__isVoted__creator__02C769E9">
+          <End Role="Profiles" Type="Self.Profiles" Multiplicity="0..1" />
+          <End Role="isVoted" Type="Self.isVoted" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profiles">
+              <PropertyRef Name="creator_ID" />
+            </Principal>
+            <Dependent Role="isVoted">
+              <PropertyRef Name="creator_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__isVotedDo__answe__0697FACD">
+          <End Role="Answers" Type="Self.Answers" Multiplicity="0..1" />
+          <End Role="isVotedDown" Type="Self.isVotedDown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answers">
+              <PropertyRef Name="answer_ID" />
+            </Principal>
+            <Dependent Role="isVotedDown">
+              <PropertyRef Name="answer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__isVotedDo__creat__05A3D694">
+          <End Role="Profiles" Type="Self.Profiles" Multiplicity="0..1" />
+          <End Role="isVotedDown" Type="Self.isVotedDown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profiles">
+              <PropertyRef Name="creator_ID" />
+            </Principal>
+            <Dependent Role="isVotedDown">
+              <PropertyRef Name="creator_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Journeys__creato__7D0E9093">
           <End Role="Profiles" Type="Self.Profiles" Multiplicity="0..1" />
           <End Role="Journeys" Type="Self.Journeys" Multiplicity="*" />
@@ -252,6 +316,8 @@
         <EntityContainer Name="StackOverFlowModelStoreContainer">
           <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="isVoted" EntityType="Self.isVoted" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="isVotedDown" EntityType="Self.isVotedDown" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Journeys" EntityType="Self.Journeys" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profiles" EntityType="Self.Profiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
@@ -282,6 +348,22 @@
           <AssociationSet Name="FK__Comments__journe__7E02B4CC" Association="Self.FK__Comments__journe__7E02B4CC">
             <End Role="Journeys" EntitySet="Journeys" />
             <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__isVoted__answer___00DF2177" Association="Self.FK__isVoted__answer___00DF2177">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="isVoted" EntitySet="isVoted" />
+          </AssociationSet>
+          <AssociationSet Name="FK__isVoted__creator__02C769E9" Association="Self.FK__isVoted__creator__02C769E9">
+            <End Role="Profiles" EntitySet="Profiles" />
+            <End Role="isVoted" EntitySet="isVoted" />
+          </AssociationSet>
+          <AssociationSet Name="FK__isVotedDo__answe__0697FACD" Association="Self.FK__isVotedDo__answe__0697FACD">
+            <End Role="Answers" EntitySet="Answers" />
+            <End Role="isVotedDown" EntitySet="isVotedDown" />
+          </AssociationSet>
+          <AssociationSet Name="FK__isVotedDo__creat__05A3D694" Association="Self.FK__isVotedDo__creat__05A3D694">
+            <End Role="Profiles" EntitySet="Profiles" />
+            <End Role="isVotedDown" EntitySet="isVotedDown" />
           </AssociationSet>
           <AssociationSet Name="FK__Journeys__creato__7D0E9093" Association="Self.FK__Journeys__creato__7D0E9093">
             <End Role="Profiles" EntitySet="Profiles" />
@@ -331,6 +413,8 @@
           <NavigationProperty Name="Comments" Relationship="Self.FK__Comment__answer___38996AB5" FromRole="Answers" ToRole="Comments" />
           <Property Name="creator_ID" Type="Int32" />
           <NavigationProperty Name="Profile" Relationship="StackOverFlowModel.FK__Answers__creator__607251E5" FromRole="Answer" ToRole="Profile" />
+          <NavigationProperty Name="isVoteds" Relationship="StackOverFlowModel.FK__isVoted__answer___00DF2177" FromRole="Answer" ToRole="isVoted" />
+          <NavigationProperty Name="isVotedDowns" Relationship="StackOverFlowModel.FK__isVotedDo__answe__0697FACD" FromRole="Answer" ToRole="isVotedDown" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -365,6 +449,8 @@
           <NavigationProperty Name="savedQuestions" Relationship="StackOverFlowModel.FK__savedQues__creat__76619304" FromRole="Profile" ToRole="savedQuestion" />
           <Property Name="remember" Type="Boolean" />
           <NavigationProperty Name="Journeys" Relationship="StackOverFlowModel.FK__Journeys__creato__7D0E9093" FromRole="Profile" ToRole="Journey" />
+          <NavigationProperty Name="isVoteds" Relationship="StackOverFlowModel.FK__isVoted__creator__02C769E9" FromRole="Profile" ToRole="isVoted" />
+          <NavigationProperty Name="isVotedDowns" Relationship="StackOverFlowModel.FK__isVotedDo__creat__05A3D694" FromRole="Profile" ToRole="isVotedDown" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -566,6 +652,24 @@
             <End Role="Journey" EntitySet="Journeys" />
             <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
+          <EntitySet Name="isVoteds" EntityType="StackOverFlowModel.isVoted" />
+          <EntitySet Name="isVotedDowns" EntityType="StackOverFlowModel.isVotedDown" />
+          <AssociationSet Name="FK__isVoted__answer___00DF2177" Association="StackOverFlowModel.FK__isVoted__answer___00DF2177">
+            <End Role="Answer" EntitySet="Answers" />
+            <End Role="isVoted" EntitySet="isVoteds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__isVotedDo__answe__0697FACD" Association="StackOverFlowModel.FK__isVotedDo__answe__0697FACD">
+            <End Role="Answer" EntitySet="Answers" />
+            <End Role="isVotedDown" EntitySet="isVotedDowns" />
+          </AssociationSet>
+          <AssociationSet Name="FK__isVoted__creator__02C769E9" Association="StackOverFlowModel.FK__isVoted__creator__02C769E9">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="isVoted" EntitySet="isVoteds" />
+          </AssociationSet>
+          <AssociationSet Name="FK__isVotedDo__creat__05A3D694" Association="StackOverFlowModel.FK__isVotedDo__creat__05A3D694">
+            <End Role="Profile" EntitySet="Profiles" />
+            <End Role="isVotedDown" EntitySet="isVotedDowns" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK__Answers__creator__607251E5">
           <End Type="StackOverFlowModel.Profile" Role="Profile" Multiplicity="0..1" />
@@ -646,6 +750,74 @@
             </Principal>
             <Dependent Role="Comment">
               <PropertyRef Name="journey_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="isVoted">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="answer_ID" Type="Int32" />
+          <Property Name="creator_ID" Type="Int32" />
+          <NavigationProperty Name="Answer" Relationship="StackOverFlowModel.FK__isVoted__answer___00DF2177" FromRole="isVoted" ToRole="Answer" />
+          <NavigationProperty Name="Profile" Relationship="StackOverFlowModel.FK__isVoted__creator__02C769E9" FromRole="isVoted" ToRole="Profile" />
+        </EntityType>
+        <EntityType Name="isVotedDown">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="answer_ID" Type="Int32" />
+          <Property Name="creator_ID" Type="Int32" />
+          <NavigationProperty Name="Answer" Relationship="StackOverFlowModel.FK__isVotedDo__answe__0697FACD" FromRole="isVotedDown" ToRole="Answer" />
+          <NavigationProperty Name="Profile" Relationship="StackOverFlowModel.FK__isVotedDo__creat__05A3D694" FromRole="isVotedDown" ToRole="Profile" />
+        </EntityType>
+        <Association Name="FK__isVoted__answer___00DF2177">
+          <End Type="StackOverFlowModel.Answer" Role="Answer" Multiplicity="0..1" />
+          <End Type="StackOverFlowModel.isVoted" Role="isVoted" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answer">
+              <PropertyRef Name="answer_ID" />
+            </Principal>
+            <Dependent Role="isVoted">
+              <PropertyRef Name="answer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__isVotedDo__answe__0697FACD">
+          <End Type="StackOverFlowModel.Answer" Role="Answer" Multiplicity="0..1" />
+          <End Type="StackOverFlowModel.isVotedDown" Role="isVotedDown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answer">
+              <PropertyRef Name="answer_ID" />
+            </Principal>
+            <Dependent Role="isVotedDown">
+              <PropertyRef Name="answer_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__isVoted__creator__02C769E9">
+          <End Type="StackOverFlowModel.Profile" Role="Profile" Multiplicity="0..1" />
+          <End Type="StackOverFlowModel.isVoted" Role="isVoted" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="creator_ID" />
+            </Principal>
+            <Dependent Role="isVoted">
+              <PropertyRef Name="creator_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__isVotedDo__creat__05A3D694">
+          <End Type="StackOverFlowModel.Profile" Role="Profile" Multiplicity="0..1" />
+          <End Type="StackOverFlowModel.isVotedDown" Role="isVotedDown" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile">
+              <PropertyRef Name="creator_ID" />
+            </Principal>
+            <Dependent Role="isVotedDown">
+              <PropertyRef Name="creator_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -749,6 +921,24 @@
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="creator_ID" ColumnName="creator_ID" />
                 <ScalarProperty Name="journey_ID" ColumnName="journey_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="isVoteds">
+            <EntityTypeMapping TypeName="StackOverFlowModel.isVoted">
+              <MappingFragment StoreEntitySet="isVoted">
+                <ScalarProperty Name="creator_ID" ColumnName="creator_ID" />
+                <ScalarProperty Name="answer_ID" ColumnName="answer_ID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="isVotedDowns">
+            <EntityTypeMapping TypeName="StackOverFlowModel.isVotedDown">
+              <MappingFragment StoreEntitySet="isVotedDown">
+                <ScalarProperty Name="creator_ID" ColumnName="creator_ID" />
+                <ScalarProperty Name="answer_ID" ColumnName="answer_ID" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

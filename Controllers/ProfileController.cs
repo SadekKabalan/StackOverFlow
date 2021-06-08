@@ -37,30 +37,42 @@ namespace StackOverFlow.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Signup(Profile pro)
+        public ActionResult Signup(Profile pro,string university)
         {
             try
             {
 
-
+                
                 Profile profile = new Profile();
                 profile.username = pro.username;
                 profile.Email = pro.Email;
                 profile.Password = pro.Password;
                 profile.major = pro.major;
-                profile.university_ID = null;
-
-                db.Profiles.Add(profile);
-                db.SaveChanges();
-                Session["username"] = profile.username.ToString();
-                Session["Email"] = profile.Email.ToString();
-                if (pro.remember == true)
-                {
-                    var cookie = new HttpCookie("username", pro.username);
-                    cookie.Expires = DateTime.Now.AddDays(30);
-                    HttpContext.Response.Cookies.Add(cookie);
+                if (university.Length >0)
+                {    
+                    var uni =(db.Universities.Where(x => x.Name == university)).ToList();
+                    if (uni.Count()==0)
+                    {
+                        University university1 = new University();
+                        university1.Name = university;
+                        db.Universities.Add(university1);
+                        db.SaveChanges();
+    
+                    }
+                    profile.university_ID = (db.Universities.Single(x => x.Name == university)).university_ID;
+                    db.Profiles.Add(profile);
+                    db.SaveChanges();
+                    Session["username"] = profile.username.ToString();
+                    Session["Email"] = profile.Email.ToString();
+                    if (pro.remember == true)
+                    {
+                        var cookie = new HttpCookie("username", pro.username);
+                        cookie.Expires = DateTime.Now.AddDays(30);
+                        HttpContext.Response.Cookies.Add(cookie);
+                    }
                 }
             }
+
             catch (Exception e)
             {
 

@@ -8,13 +8,17 @@
     <link href="~/css/home.css" rel="stylesheet" />
     <link href="~/css/Questions.css" rel="stylesheet" />
     <title>StackOverFlow</title>
- 
+
 </head>
 <body>
     <div class="container-fluid" style="height: 30px; background-color: #333231;">
         <div class="container">
             <div class="row" style="margin-left: 5px;">
-                <div class="col-6 text-white horizntal smStyle"><img class="mx-1" src="~/assest/facebook.png" style="width: 21px; height: 21px;"><img class="mx-1" src="~/assest/instagram.png" style="width: 21px; height: 21px;"><img src="~/assest/twitter.png" class="mx-1" style="width: 21px; height: 21px;"></div>
+                <div class="col-6 text-white horizntal smStyle">
+                <a href="http://www.facebook.com"><img class="mx-1" src="~/assest/facebook.png" style="width: 21px; height: 21px;"></a>
+                 <a href="http://www.instagram.com"><img class="mx-1" src="~/assest/instagram.png" style="width: 21px; height: 21px;"></a>
+                <a href="http://www.twitter.com"><img src="~/assest/twitter.png" class="mx-1" style="width: 21px; height: 21px;"></a>
+                </div>
                 <div class="col-3 text-white horizntal smHide">
                     <span>
                         @if (Session["username"] != null)
@@ -71,7 +75,7 @@
                                     <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
                                         <li> @Html.ActionLink("About Us", "About", "Home", null, new { @class = "dropdown-item" })</li>
                                         <li> @Html.ActionLink("Tags", "Tag", "Home", null, new { @class = "dropdown-item" })</li>
-                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        <li> @Html.ActionLink("Users", "Users", "Home", null, new { @class = "dropdown-item" })</li>
                                     </ul>
                                 </div>
                                    
@@ -99,7 +103,10 @@
                         <div class="card-body">
                             <label style="font-size: 20px; border-bottom: 1px dashed white;">About Us</label>
                             <p style="padding-top: 5px;"> We are 2 LU Computer Sceince Students in Lebanon, we created this website to help the students and share thier knowlodges. </p>
-                            <button type="button" class="btn btn-light" style="margin-bottom: 30px;">Show More <i><img src="../assest/right.png" style="height: 17px; width: 17px;"></i></button>
+                            @using (Html.BeginForm("About","Home",FormMethod.Post))
+                            {
+                            <button type="submit" class="btn btn-light" style="margin-bottom: 30px;">Show More <i><img src="../assest/right.png" style="height: 17px; width: 17px;"></i></button>
+                            }
                         </div>
                     </div>
 
@@ -109,10 +116,11 @@
                         <div class="card-body">
                             <label style="font-size: 20px; border-bottom: 1px dashed white;">Quick Links</label>
                             <ul style=" list-style: none; padding:5px 0px 0px 0px;">
-                                <li><a href="#" style="text-decoration: none; color: white;">Ask A Qustion</a></li>
-                                <li><a href="#" style="text-decoration: none; color: white;">Questions</a></li>
-                                <li><a href="#" style="text-decoration: none; color: white;">Students Journey</a></li>
-                                <li><a href="#" style="text-decoration: none; color: white;">About Us</a></li>
+                                <li> @Html.ActionLink("Home", "Index", "Home", null, new { @style = "text-decoration: none; color: white;" })</li>
+                                <li> @Html.ActionLink("Questions", "Questions", "Home", null, new { @style = "text-decoration: none; color: white;" })</li>
+                                <li> @Html.ActionLink("Ask a Question", "Index", "Question", null, new { @style = "text-decoration: none; color: white;" })</li>
+                                <li> @Html.ActionLink("Student's Journey", "Journey", "Home", null, new { @style = "text-decoration: none; color: white;" })</li>
+                                <li> @Html.ActionLink("About Us", "About", "Home", null, new { @style = "text-decoration: none; color: white;" })</li>
                             </ul>
                         </div>
                     </div>
@@ -123,9 +131,9 @@
                             <label style="font-size: 20px; border-bottom: 1px dashed white;">Follow Up!</label>
                             <br>
                             <div class="btn-group" role="group" style="padding-top: 5px; ">
-                                <button type="button" class="btn"><i><img src="~/assest/facebook.png"></i></button>
-                                <button type="button" class="btn"><i><img src="~/assest/instagram.png"></i></button>
-                                <button type="button" class="btn"><i><img src="~/assest/twitter.png"></i></button>
+                                <a href="http://www.facebook.com" type="button" class="btn"><i><img src="~/assest/facebook.png"></i></a>
+                                <a href="http://www.instagram.com" type="button" class="btn"><i><img src="~/assest/instagram.png"></i></a>
+                                <a href="http://www.twitter.com" type="button" class="btn"><i><img src="~/assest/twitter.png"></i></a>
                             </div>
                         </div>
                     </div>
@@ -137,7 +145,7 @@
                             <br>
                             <label style="font-size: 15px; padding-top: 5px;">Send us any beficial feedback to improve our site !</label>
                             <br>
-                            <button type="button" class="btn btn-light" style="margin-top: 5px; width: 75%;">Send Email</button>
+                            <a href="http://www.gmail.com" type="button" class="btn btn-light" style="margin-top: 5px; width: 75%;">Send Email</a>
                         </div>
                     </div>
 

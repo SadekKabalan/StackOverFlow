@@ -1,0 +1,74 @@
+﻿@model IEnumerable<StackOverFlow.Models.users>
+@{
+    ViewBag.Title = "Questions";
+    Layout = "~/Views/Shared/LayoutPage.cshtml";
+}
+
+
+<body>
+
+    @{
+        <div class="container" style="border:2px solid black; margin-top:10px; margin-bottom:5px;">
+            <div class="row" style=" margin-top:10px; margin-bottom:10px;">
+                <div class="col-12" style="width:93%;">
+                    @using (@Html.BeginForm("searchUser", "Users", "search"))
+                    {
+                        <input class="form-control hi " style="margin-top: 15px;" type="search" placeholder="Search For a specific User name" name="searchUser" aria-label="Search">
+                    }
+                </div>
+                @foreach (var pro in Model)
+                {
+
+
+                    <div class="col-lg-4 col-md-4 col-sm-2">
+                        <div class="card my-3" style="width: 20rem;">
+                            <div class="card-body">
+                                <p style="font-size:15px; text-decoration:none; background-color:lightgray; padding:10px;">@Html.ActionLink(pro.username, "userDetails", "Users", new { nbPages = 1 ,name=pro.username }, new { @style = "text-decoration:none; font-size:20px;" })</p>
+                                <p>This person ask  <label style="color:red;">@pro.nbQuestions</label> questions.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+        </div>
+    }
+    @{
+        <div class="container">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @if (Model.FirstOrDefault() != null)
+                    {
+                        if (Model.First().nbPages == 1)
+                        {
+                            <li class="page-item">@Html.ActionLink("1", "Users", "Home", new { nbPages = 1 }, new { @class = "page-link" })</li>
+                        }
+                        else if (Model.First().nbPages > 1 && Model.First().pageIndex == 1)
+                        {
+                            <li class="page-item">@Html.ActionLink("" + Model.First().pageIndex, "Users", "Home", new { nbPages = Model.First().pageIndex }, new { @class = "page-link" })</li>
+                            <li class="page-item">@Html.ActionLink("Next", "Users", "Home", new { nbPages = Model.First().pageIndex + 1 }, new { @class = "page-link" })</li>
+                        }
+
+                        else if (Model.First().nbPages == Model.First().pageIndex)
+                        {
+                            <li class="page-item">@Html.ActionLink("Pervious", "Users", "Home", new { nbPages = Model.First().pageIndex - 1 }, new { @class = "page-link" })</li>
+                            <li class="page-item">@Html.ActionLink("" + Model.First().pageIndex, "Users", "Home", new { nbPages = Model.First().pageIndex }, new { @class = "page-link" })</li>
+                        }
+                        else if (Model.First().nbPages >= 2 && Model.First().pageIndex > 1)
+                        {
+                            <li class="page-item">@Html.ActionLink("Pervious", "Users", "Home", new { nbPages = Model.First().pageIndex - 1 }, new { @class = "page-link" })</li>
+                            <li class="page-item">@Html.ActionLink("" + Model.First().pageIndex, "Users", "Home", new { nbPages = Model.First().pageIndex }, new { @class = "page-link" })</li>
+                            <li class="page-item">@Html.ActionLink("Next", "Users", "Home", new { nbPages = Model.First().pageIndex + 1 }, new { @class = "page-link" })</li>
+
+
+                        }
+                    }
+
+
+
+                </ul>
+            </nav>
+        </div>
+    }
+</body>

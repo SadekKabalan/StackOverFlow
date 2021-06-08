@@ -5,19 +5,17 @@ using System.Web;
 
 namespace StackOverFlow.Models
 {
-    public class journies
+    public class users
     {
         FlowEntities db = new FlowEntities();
-        public int journey_ID { get; set; }
-        public string title { get; set; }
-        public string body { get; set; }
-        public string username { get; set; }
         public int creator_ID { get; set; }
-        public int nbPages {  get; set; }
-        public int pageIndxer { get; set; }
+        public string username { get; set; }
+        public int nbQuestions { get; set; }
+        public int nbAnswers { get; set; }
+        public int nbPages { get; set; }
+        public int pageIndex { get; set; }
 
-        public string date { get; set; }
-        public List<Comment> journeyComments { get; set; }
+        public List<Question> questions { get; set; }
         public virtual Profile GetProfile(int? id)
         {
             Profile pf = new Profile();
@@ -26,8 +24,7 @@ namespace StackOverFlow.Models
             return pf;
 
         }
-
-        public virtual University GetUniversity(int ? id)
+        public virtual University GetUniversity(int? id)
         {
             University uni = new University();
             var res = db.Universities.Single(x => x.university_ID == id);

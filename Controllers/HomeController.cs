@@ -17,13 +17,32 @@ namespace StackOverFlow.Controllers
                 Session["username"] = cookie.Value;
 
             }
-            return View();
+            FlowEntities db = new FlowEntities();
+            var journies = from journey in db.Journeys select journey;
+            var journeyList = journies.OrderByDescending(x => x.date).Take(3);
+            List<journies> result = new List<journies>();
+            foreach (var journ in journeyList)
+            {
+                journies jour = new journies();
+                jour.journey_ID = journ.journey_ID;
+                jour.title = journ.title;
+                jour.body = journ.body;
+                jour.date = journ.date;
+
+                var name = db.Profiles.Single(x => x.creator_ID == journ.creator_ID);
+                jour.username = name.username;
+                jour.creator_ID = name.creator_ID;
+
+                result.Add(jour);
+            }
+            return View(result);
         }
 
         public ActionResult Questions(int nbPages = 1)
         {
             FlowEntities db = new FlowEntities();
             var questions = from question in db.Questions select question;
+            var resNames = (from uni in db.Universities select uni.Name).ToList();
             var questionList = questions.OrderByDescending(x => x.date ).Skip((nbPages - 1) * 6).Take(6);
             List<QuestionTagView> result=new List<QuestionTagView>();
             foreach(var quest in questionList)
@@ -43,6 +62,7 @@ namespace StackOverFlow.Controllers
                 else
                     tagView.isCorrect = false;
                 var name = db.Profiles.Single(x => x.creator_ID == quest.creator_ID);
+                tagView.universities = resNames;
                 tagView.creator.username = name.username;
                 tagView.nbPages = (int) Math.Ceiling((double) questions.Count() / 6 );
                 tagView.pageIndxer = nbPages;
@@ -186,6 +206,28 @@ namespace StackOverFlow.Controllers
         public ActionResult questionForm()
         {
             return View();
+        }
+
+        public ActionResult Users(int nbPages = 1)
+        {
+            FlowEntities db = new FlowEntities();
+            var allProfs = from prof in db.Profiles select prof;
+            List<users> result = new List<users>();
+            foreach (var pro in allProfs)
+            {
+                users userModel = new users();
+                userModel.creator_ID = pro.creator_ID;
+                userModel.username = pro.username;
+                userModel.nbAnswers = (db.Answers.Where(x => x.creator_ID == pro.creator_ID)).Count();
+                userModel.nbQuestions = (db.Questions.Where(x => x.creator_ID == pro.creator_ID)).Count();
+                userModel.nbPages = (int)Math.Ceiling((double)allProfs.Count() / 24);
+                userModel.pageIndex = nbPages;
+                result.Add(userModel);
+            }
+            List<users> resultList = result.OrderByDescending(x => x.nbQuestions).Skip((nbPages - 1) * 24).Take(24).ToList();
+            return View(resultList);
+
+
         }
 
 

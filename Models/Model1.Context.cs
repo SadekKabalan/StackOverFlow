@@ -34,5 +34,7 @@ namespace StackOverFlow.Models
         public virtual DbSet<University> Universities { get; set; }
         public virtual DbSet<savedQuestion> savedQuestions { get; set; }
         public virtual DbSet<Journey> Journeys { get; set; }
+        public virtual DbSet<isVoted> isVoteds { get; set; }
+        public virtual DbSet<isVotedDown> isVotedDowns { get; set; }
     }
 }

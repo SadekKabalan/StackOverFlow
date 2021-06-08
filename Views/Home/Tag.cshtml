@@ -10,7 +10,7 @@
     @{
         <div class="container" style="border:2px solid black; margin-top:10px; margin-bottom:5px;">
             <div class="row" style=" margin-top:10px; margin-bottom:10px;">
-                    <div class="col-12" style="width:95%;">
+                    <div class="col-12" style="width:93%;">
                         @using (@Html.BeginForm("searchTags", "Question", "search"))
                         {
                             <input class="form-control hi " style="margin-top: 15px;" type="search" placeholder="Search For a specific tag" name="searchtg" aria-label="Search">
@@ -21,7 +21,7 @@
 
 
                     <div class="col-lg-4 col-md-4 col-sm-2">
-                        <div class="card my-3" style="width: 22rem;">
+                        <div class="card my-3" style="width: 20rem;">
                             <div class="card-body">
                               <p style="font-size:15px; text-decoration:none; background-color:lightgray; padding:10px;">@Html.ActionLink(tag.text,"tagDetails","Question",new { nbPages=1 ,tag=tag.text},new { @style= "text-decoration:none; font-size:20px;" })</p>
                               <p>Used in <label style="color:red;">@tag.nbUsedInQuest</label> questions.</p>

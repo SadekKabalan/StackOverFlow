@@ -132,10 +132,18 @@
     <Compile Include="Controllers\JourneyController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Answer.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\users.cs" />
+    <Compile Include="Models\isVoted.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\isVotedDown.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tagModel.cs" />
@@ -253,6 +261,10 @@
     <Content Include="Views\Home\Tag.cshtml" />
     <Content Include="Views\Question\tagDetails.cshtml" />
     <Content Include="Views\Question\searchTags.cshtml" />
+    <Content Include="Views\Question\filter.cshtml" />
+    <Content Include="Views\Home\Users.cshtml" />
+    <Content Include="Views\Users\searchUser.cshtml" />
+    <Content Include="Views\Users\userDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

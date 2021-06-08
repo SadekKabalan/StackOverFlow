@@ -210,11 +210,20 @@ namespace StackOverFlow.Controllers
                 int cretID = db.Profiles.Single(x => x.username.Equals(user)).creator_ID;
                 var answer = db.Answers.Single(x => x.answer_ID == id);
                 var creatorQuestionId = db.Questions.Single(x => x.question_ID == answer.question_ID).creator_ID;
-                if (creatorQuestionId == cretID)
-                    answer.isApproved = true;
-                answer.votes++;
+                var ifVoted = db.isVoteds.Where(x => x.answer_ID == answer.answer_ID && x.creator_ID == cretID);
+                if (ifVoted.Count() == 0)
+                {
+                    isVoted voted = new isVoted();
+                    voted.creator_ID = cretID;
+                    voted.answer_ID = answer.answer_ID;
+                    db.isVoteds.Add(voted);
+                    if (creatorQuestionId == cretID)
+                        answer.isApproved = true;
+                    answer.votes++;
 
-                db.SaveChanges();
+                    db.SaveChanges();
+                }
+
                 int? reid = answer.question_ID;
                 return RedirectToAction("questionDetails", "Question", new { id = reid });
             }
@@ -229,10 +238,19 @@ namespace StackOverFlow.Controllers
                 int cretID = db.Profiles.Single(x => x.username.Equals(user)).creator_ID;
                 var answer = db.Answers.Single(x => x.answer_ID == id);
                 var creatorQuestionId = db.Questions.Single(x => x.question_ID == answer.question_ID).creator_ID;
-                if (creatorQuestionId == cretID)
-                    answer.isApproved = false;
-                answer.votes--;
-                db.SaveChanges();
+                var ifVoted = db.isVotedDowns.Where(x => x.answer_ID == answer.answer_ID && x.creator_ID == cretID);
+                if (ifVoted.Count() == 0)
+                {
+                    isVotedDown voted = new isVotedDown();
+                    voted.creator_ID = cretID;
+                    voted.answer_ID = answer.answer_ID;
+                    db.isVotedDowns.Add(voted);
+
+                    if (creatorQuestionId == cretID)
+                        answer.isApproved = false;
+                    answer.votes--;
+                    db.SaveChanges();
+                }
                 int? reid = answer.question_ID;
                 return RedirectToAction("questionDetails", "Question", new { id = reid });
             }
@@ -571,6 +589,62 @@ namespace StackOverFlow.Controllers
             }
             List<tagModel> resultList = result.OrderByDescending(x => x.nbUsedInQuest).Skip((nbPages - 1) * 24).Take(24).ToList();
             return View(resultList);
+        }
+
+        public ActionResult filter(string university,string asker, int nbPages=1)
+        {
+            string searchUni = "";
+            string searchAsker = "";
+            if ( Session["searchedAsk"] == null && asker.Length > 0 || Session["searchedUni"] == null && university.Length > 0)
+            {
+                Session["searchedUni"] = university;
+                Session["searchedAsk"] = asker;
+
+            }
+            if (Session["searchedUni"] != null && university != null || Session["searchedAsk"] != null && asker != null)
+            {
+                Session["searchedUni"] = university;
+                Session["searchedAsk"] = asker;
+            }
+            if (Session["searchedUni"] != null || Session["searchedAsk"]!=null)
+            {
+                searchUni = Session["searchedUni"].ToString();
+                searchAsker = Session["searchedAsk"].ToString();
+            }
+            FlowEntities db = new FlowEntities();
+            List<Question> filteredList;
+            var resNames = (from uni in db.Universities select uni.Name).ToList();
+        
+            filteredList = (from qus in db.Questions join prof in db.Profiles.Where(x => x.university_ID == (db.Universities.FirstOrDefault(y => y.Name == searchUni).university_ID) && x.username==searchAsker ) on qus.creator_ID equals prof.creator_ID select qus).ToList();
+            var questionList = filteredList.OrderByDescending(x => x.date).Skip((nbPages - 1) * 6).Take(6);
+            List<QuestionTagView> result = new List<QuestionTagView>();
+            foreach (var quest in questionList)
+            {
+                QuestionTagView tagView = new QuestionTagView();
+                tagView.question_ID = quest.question_ID;
+                tagView.title = quest.title;
+                tagView.body = quest.body;
+                tagView.date = quest.date;
+                var res = (from tagId in db.tag_question.Where(x => x.question_ID == quest.question_ID) join tagi in db.Tags on tagId.tag_ID equals tagi.tag_ID select tagi.tagText).ToList();
+                tagView.tag = res;
+                List<int> nbAnswers = new List<int>();
+                nbAnswers = (from answer in db.Answers.Where(x => x.question_ID == quest.question_ID) select answer.answer_ID).ToList();
+                tagView.nbAnswers = nbAnswers.Count();
+                var correct1 = db.Answers.Where(x => x.question_ID == quest.question_ID).Where(x => x.isApproved == true);
+                if (correct1.Count() != 0)
+                    tagView.isCorrect = true;
+                else
+                    tagView.isCorrect = false;
+                var name = db.Profiles.Single(x => x.creator_ID == quest.creator_ID);
+                tagView.universities = resNames;
+                tagView.creator.username = name.username;
+                tagView.nbPages = (int)Math.Ceiling((double)filteredList.Count() / 6);
+                tagView.pageIndxer = nbPages;
+                result.Add(tagView);
+
+            }
+                return View(result);
+
         }
 
     }

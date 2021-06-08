@@ -27,6 +27,12 @@
         <EntityTypeShape EntityType="StackOverFlowModel.Journey" Width="1.5" PointX="5.25" PointY="0.75" />
         <AssociationConnector Association="StackOverFlowModel.FK__Journeys__creato__7D0E9093" />
         <AssociationConnector Association="StackOverFlowModel.FK__Comments__journe__7E02B4CC" />
+        <EntityTypeShape EntityType="StackOverFlowModel.isVoted" Width="1.5" PointX="12.75" PointY="8.625" />
+        <EntityTypeShape EntityType="StackOverFlowModel.isVotedDown" Width="1.5" PointX="12.75" PointY="11.625" />
+        <AssociationConnector Association="StackOverFlowModel.FK__isVoted__answer___00DF2177" />
+        <AssociationConnector Association="StackOverFlowModel.FK__isVotedDo__answe__0697FACD" />
+        <AssociationConnector Association="StackOverFlowModel.FK__isVoted__creator__02C769E9" />
+        <AssociationConnector Association="StackOverFlowModel.FK__isVotedDo__creat__05A3D694" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
